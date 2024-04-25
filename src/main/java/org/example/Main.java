@@ -1,32 +1,25 @@
 package org.example;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Server server = new Server();
 
-        KeyPairGenerator keyPairGenerator = null;
-        try {
-            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        Client client1 = new Client("Catarina", "MC_fanatic", server);
+        Client client2 = new Client("Luís", "luf", server);
+        Client client3 = new Client("Rosa", "quinhaz", server);
+        Client client4 = new Client("Josefa", "josefa4609", server);
 
-        KeyPair keyPair1 = keyPairGenerator.generateKeyPair();
-        KeyPair keyPair2 = keyPairGenerator.generateKeyPair();
-
-        Client client1 = new Client("Alice", "aliii",keyPair1);
-        Client client2 = new Client("Bob", "boby",keyPair2);
-
-        client1.setCertificate(new Certificate(keyPair1.getPublic()));
-        client2.setCertificate(new Certificate(keyPair2.getPublic()));
+        client1.setCertificate(new Certificate(client1.getPublicRSAKey()));
+        client2.setCertificate(new Certificate(client2.getPublicRSAKey()));
+        client3.setCertificate(new Certificate(client3.getPublicRSAKey()));
+        client4.setCertificate(new Certificate(client4.getPublicRSAKey()));
         server.addUser(client1);
         server.addUser(client2);
-        server.forwardMessage("Hello, Bob!", client1, client2); //Alice sends a message to Bob
-        server.forwardMessage("Hello, Alice!", client2, client1); //Bob sends a message to Alice
+        server.addUser(client3);
+        server.addUser(client4);
         server.validateCertificate(client1, client2.getCertificate()); //Alice validates Bob's certificate
         server.validateCertificate(client2, client1.getCertificate()); //Bob validates Alice's certificate
+        server.validateCertificate(client3, client1.getCertificate()); //Alice validates Charlie's certificate
+        server.validateCertificate(client4, client1.getCertificate()); //Alice validates David's certificate
     }
 }

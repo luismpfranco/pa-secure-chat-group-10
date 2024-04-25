@@ -1,8 +1,8 @@
 package org.example;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 public class Server {
     private List<Client> clients;
 
@@ -13,11 +13,32 @@ public class Server {
     public void addUser(Client client) {
         clients.add(client);
         distributeCertificate(client);
+        for(Client c : clients){
+            c.getWindow().updateClient(clients.toArray(new Client[0]));
+        }
     }
 
-    public void forwardMessage(String message, Client clientSender, Client clientReceiver) {
+    public void forwardMessage(Message message, Client clientSender, Client clientReceiver) throws Exception {
+        if (clientReceiver == null)
+        {
+            broadcastMessage(message, clientSender);
+        }
+        else
+        {
+            clientReceiver.receiveMessage(message, clientSender, clientReceiver);
+        }
+    }
 
-        clientReceiver.receiveMessage(message, clientSender, clientReceiver);
+    public void broadcastMessage(Message message, Client clientSender) throws Exception {
+        String decryptedMessage = Encryption.decryptRSA(message.getMessage(), clientSender.getPrivateRSAKey());
+        if (!Encryption.verifyDigest(decryptedMessage, message.getDigest())) {
+            throw new Exception("Message integrity check failed");
+        }
+        for (Client c : clients) {
+            if (!c.getUsername().equals(clientSender.getUsername())) {
+                c.receiveMessage(message, clientSender, c);
+            }
+        }
     }
 
     private void distributeCertificate(Client user) {
@@ -34,9 +55,13 @@ public class Server {
             System.out.println("[TIMESTAMP]: O utilizador " + user.getUsername() + " don't have a certificate.");
         }
         else if (certificate.isValid()) {
-            System.out.println("["+ LocalDateTime.now() + "]" + user.getUsername() + " ligou-se ao Chat.");
+            System.out.println("["+ LocalDateTime.now() + "] " + user.getUsername() + " ligou-se ao Chat.");
         } else {
             System.out.println("[TIMESTAMP]: Falha ao validar certificado para o utilizador " + user.getUsername());
         }
+    }
+
+    public List<Client> getClients() {
+        return clients;
     }
 }
