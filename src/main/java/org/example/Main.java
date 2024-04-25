@@ -1,25 +1,35 @@
 package org.example;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) throws Exception {
         Server server = new Server();
+        CertificateAuthority ca = new CertificateAuthority();
 
-        Client client1 = new Client("Catarina", "MC_fanatic", server);
-        Client client2 = new Client("Luís", "luf", server);
-        Client client3 = new Client("Rosa", "quinhaz", server);
-        Client client4 = new Client("Josefa", "josefa4609", server);
+        List<Client> clients = new ArrayList<>();
+        clients.add(new Client("Catarina", "MC_fanatic", server));
+        clients.add(new Client("Luís", "luf", server));
+        clients.add(new Client("Rosa", "quinhaz", server));
+        clients.add(new Client("Josefa", "josefa4609", server));
 
-        client1.setCertificate(new Certificate(client1.getPublicRSAKey()));
-        client2.setCertificate(new Certificate(client2.getPublicRSAKey()));
-        client3.setCertificate(new Certificate(client3.getPublicRSAKey()));
-        client4.setCertificate(new Certificate(client4.getPublicRSAKey()));
-        server.addUser(client1);
-        server.addUser(client2);
-        server.addUser(client3);
-        server.addUser(client4);
-        server.validateCertificate(client1, client2.getCertificate()); //Alice validates Bob's certificate
-        server.validateCertificate(client2, client1.getCertificate()); //Bob validates Alice's certificate
-        server.validateCertificate(client3, client1.getCertificate()); //Alice validates Charlie's certificate
-        server.validateCertificate(client4, client1.getCertificate()); //Alice validates David's certificate
+        for ( Client c : clients ) {
+            c.setCaPublicKey(ca.getPublicKey());
+            c.setCrl(ca.getCrl());
+            c.obtainAndShareCertificate(ca);
+
+            if(c.getCertificate() == null) {
+                System.out.println("[TIMESTAMP]: The user " + c.getUsername() + " don't have a certificate.");
+            }
+            else if (c.getCertificate().isValid()) {
+                System.out.println("["+ LocalDateTime.now() + "] " + c.getUsername() + " has connected to Chat.");
+                c.setWindow();
+                server.addUser(c);
+            } else {
+                System.out.println("[TIMESTAMP]: Failed to validate certificate for user " + c.getUsername());
+            }
+        }
     }
 }
