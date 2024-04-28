@@ -37,9 +37,7 @@ public class ClientWindow extends JFrame {
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel toLabel = new JLabel("Para:");
         topPanel.add(toLabel);
-
-
-
+        
         clientList = new JList<>(server.getClients().toArray(new Client[0]));
         clientList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 

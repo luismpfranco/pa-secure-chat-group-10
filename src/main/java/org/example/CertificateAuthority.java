@@ -6,13 +6,22 @@ import java.nio.file.Path;
 import java.security.*;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.*;
-//* This class represents a certificate authority that is responsible for signing certificates.
+
+/**
+ * This class represents a certificate authority that is responsible for signing certificates.
+ */
 public class CertificateAuthority {
-    //* The private key of the certificate authority
+    /**
+     * The private key of the certificate authority
+     */
     private final PrivateKey privateKey;
-    //* The public key of the certificate authority
+    /**
+     * The public key of the certificate authority
+     */
     private final PublicKey publicKey;
-    //* The certificate revocation list
+    /**
+     * The certificate revocation list
+     */
     private final List<String> crl;
 
     /**

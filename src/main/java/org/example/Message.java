@@ -1,6 +1,7 @@
 package org.example;
 
 import java.io.Serializable;
+
 /**
  * This class represents a message object that is sent between the client and the server.
  */
@@ -13,6 +14,7 @@ public class Message implements Serializable {
      * Constructs a Message object by specifying the message bytes that will be sent between the client and the server.
      *
      * @param message the message that is sent to the server
+     * @param digest  the digest
      */
     public Message ( byte[] message, byte[] digest ) {
         this.message = message;

@@ -11,14 +11,17 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-//* This class represents a client that can send and receive messages.
+
+/**
+ * The class Client represents a client in the system that can send and receive messages.
+ */
 public class Client
 {
     private final String name;
     private final String username;
     private final PrivateKey privateRSAKey;
     private final PublicKey publicRSAKey;
-    public Certificate certificate;
+    private Certificate certificate;
     private final Server server;
     private ClientWindow window;
     private PublicKey caPublicKey;
@@ -196,16 +199,22 @@ public class Client
     }
 
     /**
-     * Receive certificate from the certificate authority.
-     *
-     * @param certificate the certificate
+     * Convert to pem format certificate string.
+     * @param certificate
+     * @return
      */
+
     private String convertToPemFormat(Certificate certificate) {
         String usernameData = Base64.getEncoder().encodeToString(certificate.getUsername().getBytes());
         String publicKeyData = Base64.getEncoder().encodeToString(certificate.getPublicKey().getEncoded());
         return "-----BEGIN CERTIFICATE-----\n" + usernameData + " " + publicKeyData + "\n-----END CERTIFICATE-----";
     }
 
+    /**
+     * Receive certificate from the certificate authority.
+     *
+     * @param certificate the certificate
+     */
     public void receiveCertificate(Certificate certificate)
     {
         try {
@@ -231,9 +240,9 @@ public class Client
     }
 
     /**
-            * Gets username.
-        *
-        * @return the username
+     * Gets username.
+     *
+     * @return the username
      */
     public String getUsername()
     {
@@ -307,5 +316,4 @@ public class Client
     {
         this.crl = crl;
     }
-
 }
