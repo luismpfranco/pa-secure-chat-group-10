@@ -57,11 +57,30 @@ public class Encryption {
         return new String(cipher.doFinal(message));
     }
 
+    /**
+     * Creates a digest of a message using SHA-256.
+     *
+     * @param message the message to be digested
+     *
+     * @return the digest of the message
+     *
+     * @throws Exception if any error occurs during the digest creation
+     */
     public static byte[] createDigest(String message) throws Exception {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         return md.digest(message.getBytes());
     }
 
+    /**
+     * Verifies a digest of a message.
+     *
+     * @param message the message to be verified
+     * @param digest  the digest to be verified
+     *
+     * @return true if the digest is verified, false otherwise
+     *
+     * @throws Exception if any error occurs during the digest verification
+     */
     public static boolean verifyDigest(String message, byte[] digest) throws Exception {
         byte[] newDigest = createDigest(message);
         return Arrays.equals(newDigest, digest);

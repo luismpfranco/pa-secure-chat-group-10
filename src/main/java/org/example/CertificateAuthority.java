@@ -6,12 +6,20 @@ import java.nio.file.Path;
 import java.security.*;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.*;
-
+//* This class represents a certificate authority that is responsible for signing certificates.
 public class CertificateAuthority {
+    //* The private key of the certificate authority
     private final PrivateKey privateKey;
+    //* The public key of the certificate authority
     private final PublicKey publicKey;
+    //* The certificate revocation list
     private final List<String> crl;
 
+    /**
+     * Instantiates a new Certificate authority.
+     *
+     * @throws NoSuchAlgorithmException the no such algorithm exception
+     */
     public CertificateAuthority() throws NoSuchAlgorithmException {
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
         keyGen.initialize(2048);
@@ -21,6 +29,13 @@ public class CertificateAuthority {
         this.crl = new ArrayList<>();
     }
 
+    /**
+     * Sign certificate with the CA's private key.
+     *
+     * @param certificate the certificate
+     * @return the certificate
+     * @throws Exception the exception
+     */
     public Certificate signCertificate(Certificate certificate) throws Exception {
         String data = certificate.getPublicKey() + certificate.getUsername();
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -37,6 +52,12 @@ public class CertificateAuthority {
         return certificate;
     }
 
+    /**
+     * Receive unsigned certificate and sign it.
+     *
+     * @param certificatePath the certificate path
+     * @throws Exception the exception
+     */
     public void receiveUnsignedCertificate(Path certificatePath) throws Exception {
         String pemCertificate = Files.readString(certificatePath);
 
@@ -47,12 +68,25 @@ public class CertificateAuthority {
         Files.write(certificatePath, convertToPemFormat(signedCertificate).getBytes());
     }
 
+    /**
+     * Convert to pem format certificate string.
+     *
+     * @param certificate the certificate
+     * @return the certificate
+     */
     private String convertToPemFormat(Certificate certificate) {
         String usernameData = Base64.getEncoder().encodeToString(certificate.getUsername().getBytes());
         String publicKeyData = Base64.getEncoder().encodeToString(certificate.getPublicKey().getEncoded());
         return "-----BEGIN CERTIFICATE-----\n" + usernameData + " " + publicKeyData + "\n-----END CERTIFICATE-----";
     }
 
+    /**
+     * Convert from pem format certificate.
+     *
+     * @param pemCertificate the pem certificate
+     * @return the certificate
+     * @throws Exception the exception
+     */
     private Certificate convertFromPemFormat(String pemCertificate) throws Exception {
         String certificateData = pemCertificate.replace("-----BEGIN CERTIFICATE-----\n", "").replace("\n-----END CERTIFICATE-----", "");
         String[] parts = certificateData.split(" ");
@@ -69,10 +103,21 @@ public class CertificateAuthority {
         return new Certificate(publicKey, username);
     }
 
+
+    /**
+     * Gets public key.
+     *
+     * @return the public key
+     */
     public PublicKey getPublicKey() {
         return publicKey;
     }
 
+    /**
+     * Gets crl.
+     *
+     * @return the crl
+     */
     public List<String> getCrl() {
         return crl;
     }

@@ -4,7 +4,9 @@ import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Random;
-
+/**
+ * This class represents a Diffie-Hellman key exchange object that is used to generate a secret key between the client and the server.
+ */
 public class DiffieHellman {
 
     private static final int NUM_BITS = 128;
