@@ -1,10 +1,16 @@
 package org.example;
 
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Client
 {
@@ -17,6 +23,7 @@ public class Client
     private ClientWindow window;
     private PublicKey caPublicKey;
     private List<String> crl;
+    private final Map<String, BigInteger> sharedSecrets = new HashMap<>();
 
     public Client(String name, String username, Server server) throws Exception {
         this.name = name;
@@ -58,7 +65,7 @@ public class Client
         }
         if(sender != this)
         {
-            window.addMessage(sender.getUsername() + ": " + decryptedMessage);
+            window.addMessage(sender.getName() + ": " + decryptedMessage);
         }
     }
 
@@ -68,6 +75,7 @@ public class Client
 
     public void obtainAndShareCertificate(CertificateAuthority ca) throws Exception {
         Certificate unsignedCertificate = createUnsignedCertificate();
+        submitUnsignedCertificate(ca);
         Certificate signedCertificate = ca.signCertificate(unsignedCertificate);
         this.certificate = signedCertificate;
         server.distributeCertificate(signedCertificate);
@@ -92,6 +100,59 @@ public class Client
         }
     }
 
+    public void agreeOnSharedSecret(Client otherClient) throws Exception {
+        BigInteger privateKey = DiffieHellman.generatePrivateKey();
+
+        BigInteger publicKey = DiffieHellman.generatePublicKey(privateKey);
+
+        otherClient.receivePublicKeyForSharedSecret(this.username, publicKey, privateKey);
+    }
+
+    public void receivePublicKeyForSharedSecret(String otherUsername, BigInteger otherPublicKey, BigInteger myPrivateKey) throws Exception {
+        if (myPrivateKey == null) {
+            throw new Exception("Private key is null");
+        }
+
+        BigInteger sharedSecret = DiffieHellman.computeSecret(otherPublicKey, myPrivateKey);
+
+        sharedSecrets.put(otherUsername, sharedSecret);
+    }
+
+    public void submitUnsignedCertificate(CertificateAuthority ca) throws Exception {
+        Certificate unsignedCertificate = createUnsignedCertificate();
+
+        String pemCertificate = convertToPemFormat(unsignedCertificate);
+        //System.out.println(pemCertificate);
+
+        if (!pemCertificate.contains(" ")) {
+            throw new IllegalArgumentException("Invalid certificate data");
+        }
+
+        Path path = Paths.get("certificates/" + this.username + ".pem");
+        Files.write(path, pemCertificate.getBytes());
+
+        ca.receiveUnsignedCertificate(path);
+    }
+
+    private String convertToPemFormat(Certificate certificate) {
+        String usernameData = Base64.getEncoder().encodeToString(certificate.getUsername().getBytes());
+        String publicKeyData = Base64.getEncoder().encodeToString(certificate.getPublicKey().getEncoded());
+        return "-----BEGIN CERTIFICATE-----\n" + usernameData + " " + publicKeyData + "\n-----END CERTIFICATE-----";
+    }
+
+    public void receiveCertificate(Certificate certificate)
+    {
+        try {
+            validateReceivedCertificate(certificate, caPublicKey, crl);
+        } catch (Exception e) {
+            System.out.println("Failed to validate certificate for user " + certificate.getUsername());
+        }
+    }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 
     public String getName()
     {
@@ -106,15 +167,6 @@ public class Client
     public Certificate getCertificate()
     {
         return certificate;
-    }
-
-    public void receiveCertificate(Certificate certificate)
-    {
-        try {
-            validateReceivedCertificate(certificate, caPublicKey, crl);
-        } catch (Exception e) {
-            System.out.println("Failed to validate certificate for user " + certificate.getUsername());
-        }
     }
 
     public PublicKey getPublicRSAKey()
@@ -135,11 +187,6 @@ public class Client
     public ClientWindow getWindow()
     {
         return window;
-    }
-
-    @Override
-    public String toString() {
-        return getUsername();
     }
 
     public void setCaPublicKey(PublicKey caPublicKey)
