@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -106,5 +107,9 @@ public class ClientWindow extends JFrame {
             model.addElement(c);
         }
         clientList.setModel(model);
+    }
+
+    public ByteBuffer getMessages() {
+        return ByteBuffer.wrap(messagesArea.getText().getBytes());
     }
 }

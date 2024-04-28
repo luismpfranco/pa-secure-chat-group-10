@@ -1,6 +1,7 @@
 package org.example;
 
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,8 +17,8 @@ public class Client
 {
     private final String name;
     private final String username;
-    private final PrivateKey privateRSAKey;
-    private final PublicKey publicRSAKey;
+    private PrivateKey privateRSAKey;
+    private PublicKey publicRSAKey;
     public Certificate certificate;
     private final Server server;
     private ClientWindow window;
@@ -308,4 +309,7 @@ public class Client
         this.crl = crl;
     }
 
+    public Certificate getReceivedCertificate() {
+        return certificate;
+    }
 }

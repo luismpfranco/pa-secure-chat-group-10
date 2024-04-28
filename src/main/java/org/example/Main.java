@@ -3,22 +3,12 @@ package org.example;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-/**
- * The type Main.
- */
+
 public class Main {
     public static void main(String[] args) throws Exception {
-        /**
-         * The server.
-         */
         Server server = new Server();
-        /**
-         * The ca.
-         */
         CertificateAuthority ca = new CertificateAuthority();
-        /**
-         * The clients.
-         */
+
         List<Client> clients = new ArrayList<>();
         clients.add(new Client("Catarina", "MC_fanatic", server));
         clients.add(new Client("Luís", "luf", server));
