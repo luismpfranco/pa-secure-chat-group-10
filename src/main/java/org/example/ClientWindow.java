@@ -6,12 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ClientWindow extends JFrame {
     private final Client client;
     private final JTextArea messagesArea;
     private final JTextField inputField;
-    private final JComboBox<Client> clientComboBox;
+    private final JList<Client> clientList;
     private static int windowCount = 0;
     private static final int WINDOW_DISTANCE = 360;
 
@@ -25,6 +26,21 @@ public class ClientWindow extends JFrame {
         setLocation(windowCount * WINDOW_DISTANCE, WINDOW_DISTANCE);
         windowCount++;
 
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel toLabel = new JLabel("Para:");
+        topPanel.add(toLabel);
+
+
+
+        clientList = new JList<>(server.getClients().toArray(new Client[0]));
+        clientList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        JScrollPane scrollPane = new JScrollPane(clientList);
+        scrollPane.setPreferredSize(new Dimension(205, 70));
+        topPanel.add(scrollPane);
+
+        add(topPanel, BorderLayout.NORTH);
+
         messagesArea = new JTextArea();
         messagesArea.setEditable(false);
         add(new JScrollPane(messagesArea), BorderLayout.CENTER);
@@ -35,24 +51,15 @@ public class ClientWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Client selectedClient = (Client) clientComboBox.getSelectedItem();
-                    client.sendMessage(inputField.getText(), selectedClient);
+                    List<Client> selectedClients = clientList.getSelectedValuesList();
+                    Client[] selectedClientsArray = selectedClients.toArray(new Client[0]);
+                    client.sendMessage(inputField.getText(), selectedClientsArray);
                     inputField.setText("");
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
         });
-
-
-        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel toLabel = new JLabel("Para:");
-        topPanel.add(toLabel);
-
-        clientComboBox = new JComboBox<>(server.getClients().toArray(new Client[0]));
-        topPanel.add(clientComboBox);
-
-        add(topPanel, BorderLayout.NORTH);
 
         JButton broadcastButton = new JButton("Broadcast");
         add(broadcastButton, BorderLayout.EAST);
@@ -76,6 +83,10 @@ public class ClientWindow extends JFrame {
     public void updateClient(Client[] clients) {
         ArrayList<Client> otherClients = new ArrayList<>(Arrays.asList(clients));
         otherClients.remove(client);
-        clientComboBox.setModel(new DefaultComboBoxModel<>(otherClients.toArray(new Client[0])));
+        DefaultListModel<Client> model = new DefaultListModel<>();
+        for (Client c : otherClients) {
+            model.addElement(c);
+        }
+        clientList.setModel(model);
     }
 }
