@@ -1,5 +1,4 @@
 package org.example;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +17,7 @@ public class Server {
     }
 
     public void forwardMessage(Message message, Client clientSender, Client clientReceiver) throws Exception {
+        startCommunication(clientSender, clientReceiver);
         clientReceiver.receiveMessage(message, clientSender);
     }
 
@@ -27,6 +27,11 @@ public class Server {
                 c.receiveCertificate(certificate);
             }
         }
+    }
+
+    public void startCommunication(Client client1, Client client2) throws Exception {
+        client1.agreeOnSharedSecret(client2);
+        client2.agreeOnSharedSecret(client1);
     }
 
     public List<Client> getClients() {
