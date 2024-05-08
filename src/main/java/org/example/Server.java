@@ -1,6 +1,7 @@
 package org.example;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * This class represents a server object that is used to manage the clients and the communication between them.
  */
@@ -19,10 +20,13 @@ public class Server {
      *
      * @param client the client
      */
+
     public void addUser(Client client) {
         clients.add(client);
         for(Client c : clients){
-            c.getWindow().updateClient(clients.toArray(new Client[0]));
+            if(c.getWindow() != null) {
+                c.getWindow().updateClient(clients.toArray(new Client[0]));
+            }
         }
     }
 

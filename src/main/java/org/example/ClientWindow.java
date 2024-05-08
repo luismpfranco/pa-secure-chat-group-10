@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -109,7 +108,30 @@ public class ClientWindow extends JFrame {
         clientList.setModel(model);
     }
 
-    public ByteBuffer getMessages() {
-        return ByteBuffer.wrap(messagesArea.getText().getBytes());
+    /**
+     * Gets messages area.
+     *
+     * @return the messages area
+     */
+    public JTextArea getMessagesArea() {
+        return messagesArea;
+    }
+
+    /**
+     * Gets client list.
+     *
+     * @return the client list
+     */
+    public JList<Client> getClientList() {
+        return clientList;
+    }
+
+    /**
+     * Gets input field.
+     *
+     * @return the input field
+     */
+    public JTextField getInputField() {
+        return inputField;
     }
 }

@@ -1,17 +1,14 @@
 package org.example;
 
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.*;
 import java.security.cert.CertificateException;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 //* This class represents a client that can send and receive messages.
 public class Client
 {
@@ -26,6 +23,7 @@ public class Client
     private List<String> crl;
     private final Map<String, BigInteger> sharedSecrets = new HashMap<>();
 
+    private final List<Message> receivedMessages = new ArrayList<>();
     /**
      * Instantiates a new Client.
      *
@@ -161,14 +159,13 @@ public class Client
      *
      * @param otherUsername  the other username
      * @param otherPublicKey the other public key
-     * @param myPrivateKey   the my private key
+     * @param myPrivateKey   my private key
      * @throws Exception the exception
      */
     public void receivePublicKeyForSharedSecret(String otherUsername, BigInteger otherPublicKey, BigInteger myPrivateKey) throws Exception {
         if (myPrivateKey == null) {
             throw new Exception("Private key is null");
         }
-
         BigInteger sharedSecret = DiffieHellman.computeSecret(otherPublicKey, myPrivateKey);
 
         sharedSecrets.put(otherUsername, sharedSecret);
@@ -207,6 +204,11 @@ public class Client
         return "-----BEGIN CERTIFICATE-----\n" + usernameData + " " + publicKeyData + "\n-----END CERTIFICATE-----";
     }
 
+    /**
+     * Receive certificate from the certificate authority.
+     *
+     * @param certificate the certificate
+     */
     public void receiveCertificate(Certificate certificate)
     {
         try {
@@ -290,26 +292,40 @@ public class Client
     }
 
     /**
-     * Sets ca public key.
+     * Sets ca public key and crl.
      *
      * @param caPublicKey the ca public key
+     * @param crl         the crl
      */
-    public void setCaPublicKey(PublicKey caPublicKey)
-    {
+    public void setCaPublicKeyAndCrl(PublicKey caPublicKey, List<String> crl) {
         this.caPublicKey = caPublicKey;
-    }
-
-    /**
-     * Sets crl.
-     *
-     * @param crl the crl
-     */
-    public void setCrl(List<String> crl)
-    {
         this.crl = crl;
     }
 
-    public Certificate getReceivedCertificate() {
-        return certificate;
+    /**
+     * Gets shared secret.
+     *
+     * @return the shared secret
+     */
+    public Map<String, BigInteger> getSharedSecret() {
+        return sharedSecrets;
+    }
+
+    /**
+     * Gets received messages.
+     *
+     * @return the received messages
+     */
+    public List<Message> getReceivedMessages() {
+        return receivedMessages;
+    }
+
+    /**
+     * Sets certificate.
+     *
+     * @param invalidCertificate the invalid certificate
+     */
+    public void setCertificate(Certificate invalidCertificate) {
+        this.certificate = invalidCertificate;
     }
 }

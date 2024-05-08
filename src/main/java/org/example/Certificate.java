@@ -1,6 +1,7 @@
 package org.example;
 
 import java.security.PublicKey;
+
 //* This class represents a certificate object that is used to authenticate clients.
 public class Certificate {
     //* The public key of the client.
@@ -79,4 +80,20 @@ public class Certificate {
     public void setValid(boolean valid) {
         this.valid = valid;
     }
+
+    /**
+     * Verify signature boolean.
+     *
+     * @return the boolean
+     */
+    @Override
+    public String toString() {
+        return "Certificate{" +
+                "username='" + username + '\'' +
+                ", publicKey=" + publicKey +
+                ", valid=" + valid +
+                ", signature='" + signature + '\'' +
+                '}';
+    }
+
 }

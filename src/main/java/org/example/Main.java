@@ -16,8 +16,7 @@ public class Main {
         clients.add(new Client("Josefa", "josefa4609", server));
 
         for ( Client c : clients ) {
-            c.setCaPublicKey(ca.getPublicKey());
-            c.setCrl(ca.getCrl());
+            c.setCaPublicKeyAndCrl(ca.getPublicKey(), ca.getCrl());
             c.obtainAndShareCertificate(ca);
 
             if(c.getCertificate() == null) {

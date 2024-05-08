@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.security.*;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.*;
+
 //* This class represents a certificate authority that is responsible for signing certificates.
 public class CertificateAuthority {
     //* The private key of the certificate authority
@@ -87,7 +88,7 @@ public class CertificateAuthority {
      * @return the certificate
      * @throws Exception the exception
      */
-    private Certificate convertFromPemFormat(String pemCertificate) throws Exception {
+    public Certificate convertFromPemFormat(String pemCertificate) throws Exception {
         String certificateData = pemCertificate.replace("-----BEGIN CERTIFICATE-----\n", "").replace("\n-----END CERTIFICATE-----", "");
         String[] parts = certificateData.split(" ");
         if (parts.length < 2) {

@@ -85,5 +85,4 @@ public class Encryption {
         byte[] newDigest = createDigest(message);
         return Arrays.equals(newDigest, digest);
     }
-
 }
