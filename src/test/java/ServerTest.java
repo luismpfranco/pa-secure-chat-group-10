@@ -5,8 +5,15 @@ import java.security.PublicKey;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * This class tests the Server class.
+ */
 class ServerTest {
+    /**
+     * Tests the addUser method.
+     *
+     * @throws Exception if any error occurs during the test
+     */
     @Test
     void testAddUser() throws Exception {
         Server server = new Server();
@@ -25,6 +32,11 @@ class ServerTest {
         assertTrue(clients.contains(client2));
     }
 
+    /**
+     * Tests the removeUser method.
+     *
+     * @throws Exception if any error occurs during the test
+     */
     @Test
     void testDistributeCertificate() throws Exception {
         Server server = new Server();
@@ -94,6 +106,11 @@ class ServerTest {
         }
     }
 
+    /**
+     * Tests the startCommunication method.
+     *
+     * @throws Exception if any error occurs during the test
+     */
     @Test
     void testForwardMessage() throws Exception {
         Server server = new Server();
@@ -114,6 +131,11 @@ class ServerTest {
         assertEquals(messageFromClient1, decryptedMessage);
     }
 
+    /**
+     * Tests the startCommunication method.
+     *
+     * @throws Exception if any error occurs during the test
+     */
     @Test
     void testStartCommunication() throws Exception {
         Server server = new Server();
