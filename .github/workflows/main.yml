@@ -20,6 +20,7 @@ jobs:
           distribution: 'microsoft'
           java-version: '17'
       - name: Setup Xvfb
+        if: matrix.os == 'ubuntu-latest'
         uses: GabrielBB/xvfb-action@v1.4
         with:
           run: start
