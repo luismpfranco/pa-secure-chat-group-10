@@ -1,42 +1,79 @@
 package org.example;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-public class Server {
-    private List<Client> clients;
 
+/**
+ * This class represents a server object that is used to manage the clients and the communication between them.
+ */
+public class Server {
+    private final List<Client> clients;
+
+    /**
+     * Instantiates a new Server.
+     */
     public Server() {
         this.clients = new ArrayList<>();
     }
 
+    /**
+     * Adds a user to the server.
+     *
+     * @param client the client
+     */
+
     public void addUser(Client client) {
         clients.add(client);
-        distributeCertificate(client);
-    }
-
-    public void forwardMessage(String message, Client clientSender, Client clientReceiver) {
-
-        clientReceiver.receiveMessage(message, clientSender, clientReceiver);
-    }
-
-    private void distributeCertificate(Client user) {
-        for (Client c : clients) {
-            if (!c.getUsername().equals(user.getUsername())) {
-                c.receiveCertificate(user.getCertificate());
+        for(Client c : clients){
+            if(c.getWindow() != null) {
+                c.getWindow().updateClient(clients.toArray(new Client[0]));
             }
         }
     }
 
-    public void validateCertificate(Client user, Certificate certificate) {
+    /**
+     * Forwards a message from a client to another
+     *
+     * @param message        the message
+     * @param clientSender   the client sender
+     * @param clientReceiver the client receiver
+     * @throws Exception the exception
+     */
+    public void forwardMessage(Message message, Client clientSender, Client clientReceiver) throws Exception {
+        startCommunication(clientSender, clientReceiver);
+        clientReceiver.receiveMessage(message, clientSender);
+    }
 
-        if(certificate == null) {
-            System.out.println("[TIMESTAMP]: O utilizador " + user.getUsername() + " don't have a certificate.");
+    /**
+     * Distributes a certificate to all clients.
+     *
+     * @param certificate the certificate
+     */
+    public void distributeCertificate(Certificate certificate) {
+        for (Client c : clients) {
+            if (!c.getUsername().equals(certificate.getUsername())) {
+                c.receiveCertificate(certificate);
+            }
         }
-        else if (certificate.isValid()) {
-            System.out.println("["+ LocalDateTime.now() + "]" + user.getUsername() + " ligou-se ao Chat.");
-        } else {
-            System.out.println("[TIMESTAMP]: Falha ao validar certificado para o utilizador " + user.getUsername());
-        }
+    }
+
+    /**
+     * Starts the communication between two clients.
+     *
+     * @param client1 the client 1
+     * @param client2 the client 2
+     * @throws Exception the exception
+     */
+    public void startCommunication(Client client1, Client client2) throws Exception {
+        client1.agreeOnSharedSecret(client2);
+        client2.agreeOnSharedSecret(client1);
+    }
+
+    /**
+     * Gets clients.
+     *
+     * @return the clients
+     */
+    public List<Client> getClients() {
+        return clients;
     }
 }
