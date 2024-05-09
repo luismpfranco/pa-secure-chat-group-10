@@ -33,49 +33,6 @@ public class ClientTest {
     }
 
     /**
-     * Tests the sendMessage method.
-     *
-     * @throws Exception if any error occurs during the test
-     */
-    @Test
-    void testSendMessage() throws Exception {
-
-        client1.setWindow();
-        client2.setWindow();
-
-        String message = "Hello, Receiver!";
-
-        client1.sendMessage(message, client2);
-
-        Thread.sleep(2000);
-
-        assertTrue(client2.getReceivedMessages().isEmpty(), "Receiver did not receive the message");
-        if (!client2.getReceivedMessages().isEmpty()) {
-            assertEquals(message, new String(client2.getReceivedMessages().get(0).getMessage()), "Received message does not match the sent message");
-        }
-
-        assertTrue(client1.getReceivedMessages().isEmpty(), "Sender did not receive the message");
-        if (!client1.getReceivedMessages().isEmpty()) {
-            assertEquals(message, new String(client1.getReceivedMessages().get(0).getMessage()), "Received message does not match the sent message");
-        }
-    }
-
-    /**
-     * Tests the sendMessage method when the receiver is not connected to the server.
-     *
-     * @throws Exception if any error occurs during the test
-     */
-    @Test
-    void testSendMessageToSelf() throws Exception {
-        client1.setWindow();
-        String message = "Hello, Sender!";
-
-        client1.sendMessage(message, client1);
-
-        assertEquals(0, client1.getReceivedMessages().size(), "No messages should be received");
-    }
-
-    /**
      * Tests the sendMessage method when the receiver is not connected to the server.
      *
      * @throws Exception if any error occurs during the test

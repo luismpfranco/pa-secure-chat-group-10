@@ -19,27 +19,14 @@ jobs:
         with:
           distribution: 'microsoft'
           java-version: '17'
-      - name: Setup Xvfb
-        if: matrix.os == 'ubuntu-latest'
-        uses: GabrielBB/xvfb-action@v1.4
-        with:
-          run: start
       - name: Build with Maven on ${{ matrix.os }}
         run: mvn package
-        env:
-          MAVEN_OPTS: -Djava.awt.headless=true
       - name: Run unit tests
         run: mvn test
-        env:
-          MAVEN_OPTS: -Djava.awt.headless=true
       - name: Generate JaCoCo report
         run: mvn test jacoco:report
-        env:
-          MAVEN_OPTS: -Djava.awt.headless=true
       - name: Generate Javadoc
         run: mvn javadoc:javadoc
-        env:
-          MAVEN_OPTS: -Djava.awt.headless=true
       - name: Upload the build artifact
         uses: actions/upload-artifact@v2
         with:

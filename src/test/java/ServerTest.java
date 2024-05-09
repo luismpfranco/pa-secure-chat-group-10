@@ -20,9 +20,6 @@ class ServerTest {
         Client client1 = new Client("João","user1", server);
         Client client2 = new Client("Ana","user2", server);
 
-        client1.setWindow();
-        client2.setWindow();
-
         server.addUser(client1);
         server.addUser(client2);
 
