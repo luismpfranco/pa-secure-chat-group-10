@@ -1,4 +1,0 @@
-# Created at 2024-05-09T20:44:12.891
-Boot Manifest-JAR contains absolute paths in classpath 'D:\a\pa-secure-chat-group-10\pa-secure-chat-group-10\target\test-classes'
-Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
-

@@ -2,7 +2,9 @@
 
 import java.security.PublicKey;
 
-//* This class represents a certificate object that is used to authenticate clients.
+/**
+ * This class represents a certificate object that is used to authenticate the client.
+ */
 public class Certificate {
     //* The public key of the client.
     private final PublicKey publicKey;
@@ -20,12 +22,12 @@ public class Certificate {
      * @param username  the username
      */
 
-<span class="fc" id="L23">    public Certificate(PublicKey publicKey, String username) {</span>
-<span class="fc" id="L24">        this.publicKey = publicKey;</span>
-<span class="fc" id="L25">        this.username = username;</span>
-<span class="fc" id="L26">        this.signature = null;</span>
-<span class="fc" id="L27">        this.valid = false;</span>
-<span class="fc" id="L28">    }</span>
+<span class="fc" id="L25">    public Certificate(PublicKey publicKey, String username) {</span>
+<span class="fc" id="L26">        this.publicKey = publicKey;</span>
+<span class="fc" id="L27">        this.username = username;</span>
+<span class="fc" id="L28">        this.signature = null;</span>
+<span class="fc" id="L29">        this.valid = false;</span>
+<span class="fc" id="L30">    }</span>
 
     /**
      * Gets public key.
@@ -33,7 +35,7 @@ public class Certificate {
      * @return the public key
      */
     public PublicKey getPublicKey() {
-<span class="fc" id="L36">        return publicKey;</span>
+<span class="fc" id="L38">        return publicKey;</span>
     }
 
     /**
@@ -42,7 +44,7 @@ public class Certificate {
      * @return the username
      */
     public String getUsername() {
-<span class="fc" id="L45">        return username;</span>
+<span class="fc" id="L47">        return username;</span>
     }
 
     /**
@@ -51,7 +53,7 @@ public class Certificate {
      * @return the signature
      */
     public String getSignature() {
-<span class="fc" id="L54">        return signature;</span>
+<span class="fc" id="L56">        return signature;</span>
     }
 
     /**
@@ -60,8 +62,8 @@ public class Certificate {
      * @param signature the signature
      */
     public void setSignature(String signature) {
-<span class="fc" id="L63">        this.signature = signature;</span>
-<span class="fc" id="L64">    }</span>
+<span class="fc" id="L65">        this.signature = signature;</span>
+<span class="fc" id="L66">    }</span>
 
     /**
      * Is valid boolean.
@@ -69,7 +71,7 @@ public class Certificate {
      * @return the boolean
      */
     public boolean isValid() {
-<span class="fc" id="L72">        return valid;</span>
+<span class="fc" id="L74">        return valid;</span>
     }
 
     /**
@@ -78,8 +80,8 @@ public class Certificate {
      * @param valid the valid
      */
     public void setValid(boolean valid) {
-<span class="fc" id="L81">        this.valid = valid;</span>
-<span class="fc" id="L82">    }</span>
+<span class="fc" id="L83">        this.valid = valid;</span>
+<span class="fc" id="L84">    }</span>
 
     /**
      * Verify signature boolean.
@@ -88,7 +90,7 @@ public class Certificate {
      */
     @Override
     public String toString() {
-<span class="fc" id="L91">        return &quot;Certificate{&quot; +</span>
+<span class="fc" id="L93">        return &quot;Certificate{&quot; +</span>
                 &quot;username='&quot; + username + '\'' +
                 &quot;, publicKey=&quot; + publicKey +
                 &quot;, valid=&quot; + valid +

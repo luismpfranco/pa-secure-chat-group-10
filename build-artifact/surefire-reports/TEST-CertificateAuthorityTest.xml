@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="CertificateAuthorityTest" time="1.86" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="CertificateAuthorityTest" time="1.688" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\hostedtoolcache\windows\Java_Microsoft_jdk\17.0.10\x64\bin"/>
-    <property name="sun.java.command" value="C:\Users\runneradmin\AppData\Local\Temp\surefire10077440258387920461\surefirebooter8265428944891547096.jar C:\Users\runneradmin\AppData\Local\Temp\surefire10077440258387920461 2024-05-09T20-44-46_894-jvmRun1 surefire8835359054357967112tmp surefire_04671550658083877490tmp"/>
+    <property name="sun.java.command" value="C:\Users\runneradmin\AppData\Local\Temp\surefire10348053534169149264\surefirebooter16898088430973592493.jar C:\Users\runneradmin\AppData\Local\Temp\surefire10348053534169149264 2024-05-09T21-18-47_893-jvmRun1 surefire3265192200396724805tmp surefire_012163840107227069437tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="D:\a\pa-secure-chat-group-10\pa-secure-chat-group-10\target\test-classes;D:\a\pa-secure-chat-group-10\pa-secure-chat-group-10\target\classes;C:\Users\runneradmin\.m2\repository\org\apache\httpcomponents\httpcore\4.4.14\httpcore-4.4.14.jar;C:\Users\runneradmin\.m2\repository\org\junit\jupiter\junit-jupiter\5.11.0-M1\junit-jupiter-5.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.11.0-M1\junit-jupiter-api-5.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\runneradmin\.m2\repository\org\junit\platform\junit-platform-commons\1.11.0-M1\junit-platform-commons-1.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\runneradmin\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.11.0-M1\junit-jupiter-params-5.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.11.0-M1\junit-jupiter-engine-5.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\junit\platform\junit-platform-engine\1.11.0-M1\junit-platform-engine-1.11.0-M1.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\runneradmin\AppData\Local\Temp\surefire10077440258387920461\surefirebooter8265428944891547096.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\runneradmin\AppData\Local\Temp\surefire10348053534169149264\surefirebooter16898088430973592493.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.10+7-LTS"/>
@@ -57,8 +57,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testConvertFromPermFormatWithInvalidCertificate" classname="CertificateAuthorityTest" time="0.563"/>
-  <testcase name="testConvertFromPemFormat" classname="CertificateAuthorityTest" time="0.469"/>
-  <testcase name="testSignCertificate" classname="CertificateAuthorityTest" time="0.391"/>
-  <testcase name="TestGetPublicKey" classname="CertificateAuthorityTest" time="0.235"/>
+  <testcase name="testConvertFromPermFormatWithInvalidCertificate" classname="CertificateAuthorityTest" time="0.453"/>
+  <testcase name="testConvertFromPemFormat" classname="CertificateAuthorityTest" time="0.313"/>
+  <testcase name="testSignCertificate" classname="CertificateAuthorityTest" time="0.484"/>
+  <testcase name="TestGetPublicKey" classname="CertificateAuthorityTest" time="0.266"/>
 </testsuite>

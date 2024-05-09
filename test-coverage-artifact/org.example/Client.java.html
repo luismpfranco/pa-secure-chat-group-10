@@ -9,7 +9,9 @@ import java.security.*;
 import java.security.cert.CertificateException;
 import java.util.*;
 
-//* This class represents a client that can send and receive messages.
+/**
+ * This class represents a client object that is used to send and receive messages between clients.
+ */
 public class Client
 {
     private final String name;
@@ -21,9 +23,9 @@ public class Client
     private ClientWindow window;
     private PublicKey caPublicKey;
     private List&lt;String&gt; crl;
-<span class="fc" id="L24">    private final Map&lt;String, BigInteger&gt; sharedSecrets = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L26">    private final Map&lt;String, BigInteger&gt; sharedSecrets = new HashMap&lt;&gt;();</span>
 
-<span class="fc" id="L26">    private final List&lt;Message&gt; receivedMessages = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L28">    private final List&lt;Message&gt; receivedMessages = new ArrayList&lt;&gt;();</span>
     /**
      * Instantiates a new Client.
      *
@@ -32,14 +34,14 @@ public class Client
      * @param server   the server
      * @throws Exception the exception
      */
-<span class="fc" id="L35">    public Client(String name, String username, Server server) throws Exception {</span>
-<span class="fc" id="L36">        this.name = name;</span>
-<span class="fc" id="L37">        this.username = username;</span>
-<span class="fc" id="L38">        this.server = server;</span>
-<span class="fc" id="L39">        KeyPair keyPair = Encryption.generateKeyPair();</span>
-<span class="fc" id="L40">        this.publicRSAKey = keyPair.getPublic();</span>
-<span class="fc" id="L41">        this.privateRSAKey = keyPair.getPrivate();</span>
-<span class="fc" id="L42">    }</span>
+<span class="fc" id="L37">    public Client(String name, String username, Server server) throws Exception {</span>
+<span class="fc" id="L38">        this.name = name;</span>
+<span class="fc" id="L39">        this.username = username;</span>
+<span class="fc" id="L40">        this.server = server;</span>
+<span class="fc" id="L41">        KeyPair keyPair = Encryption.generateKeyPair();</span>
+<span class="fc" id="L42">        this.publicRSAKey = keyPair.getPublic();</span>
+<span class="fc" id="L43">        this.privateRSAKey = keyPair.getPrivate();</span>
+<span class="fc" id="L44">    }</span>
 
     /**
      * Send message to a specific client(s) or to all clients.
@@ -49,28 +51,28 @@ public class Client
      * @throws Exception the exception
      */
     public void sendMessage(String message, Client... receivers) throws Exception {
-<span class="nc" id="L52">        byte[] digest = Encryption.createDigest(message);</span>
-<span class="nc" id="L53">        Signature signature = Signature.getInstance(&quot;SHA256withRSA&quot;);</span>
-<span class="nc" id="L54">        signature.initSign(this.privateRSAKey);</span>
-<span class="nc" id="L55">        signature.update(digest);</span>
+<span class="nc" id="L54">        byte[] digest = Encryption.createDigest(message);</span>
+<span class="nc" id="L55">        Signature signature = Signature.getInstance(&quot;SHA256withRSA&quot;);</span>
+<span class="nc" id="L56">        signature.initSign(this.privateRSAKey);</span>
+<span class="nc" id="L57">        signature.update(digest);</span>
 
-<span class="nc" id="L57">        StringBuilder receiverNames = new StringBuilder();</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">        for (Client r : receivers) {</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">            if(r == this)</span>
+<span class="nc" id="L59">        StringBuilder receiverNames = new StringBuilder();</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        for (Client r : receivers) {</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">            if(r == this)</span>
             {
-<span class="nc" id="L61">                continue;</span>
+<span class="nc" id="L63">                continue;</span>
             }
-<span class="nc" id="L63">            receiverNames.append(&quot;@&quot;).append(r.getName()).append(&quot;, &quot;);</span>
-<span class="nc" id="L64">            byte[] encryptedMessage = Encryption.encryptRSA(message, r.getPublicRSAKey());</span>
-<span class="nc" id="L65">            Message messageObj = new Message(encryptedMessage, digest);</span>
-<span class="nc" id="L66">            server.forwardMessage(messageObj, this, r);</span>
+<span class="nc" id="L65">            receiverNames.append(&quot;@&quot;).append(r.getName()).append(&quot;, &quot;);</span>
+<span class="nc" id="L66">            byte[] encryptedMessage = Encryption.encryptRSA(message, r.getPublicRSAKey());</span>
+<span class="nc" id="L67">            Message messageObj = new Message(encryptedMessage, digest);</span>
+<span class="nc" id="L68">            server.forwardMessage(messageObj, this, r);</span>
         }
 
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        if(!receiverNames.isEmpty()){</span>
-<span class="nc" id="L70">            receiverNames.setLength(receiverNames.length() - 2);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if(!receiverNames.isEmpty()){</span>
+<span class="nc" id="L72">            receiverNames.setLength(receiverNames.length() - 2);</span>
         }
-<span class="nc" id="L72">        window.addMessage(receiverNames + &quot; &quot; + message);</span>
-<span class="nc" id="L73">    }</span>
+<span class="nc" id="L74">        window.addMessage(receiverNames + &quot; &quot; + message);</span>
+<span class="nc" id="L75">    }</span>
 
     /**
      * Receive message from a client.
@@ -80,15 +82,15 @@ public class Client
      * @throws Exception the exception
      */
     public void receiveMessage(Message message, Client sender) throws Exception {
-<span class="nc" id="L83">        String decryptedMessage = Encryption.decryptRSA(message.getMessage(), this.getPrivateRSAKey());</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">        if (!Encryption.verifyDigest(decryptedMessage, message.getDigest())) {</span>
-<span class="nc" id="L85">            throw new Exception(&quot;Message integrity check failed&quot;);</span>
+<span class="nc" id="L85">        String decryptedMessage = Encryption.decryptRSA(message.getMessage(), this.getPrivateRSAKey());</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (!Encryption.verifyDigest(decryptedMessage, message.getDigest())) {</span>
+<span class="nc" id="L87">            throw new Exception(&quot;Message integrity check failed&quot;);</span>
         }
-<span class="nc bnc" id="L87" title="All 2 branches missed.">        if(sender != this)</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        if(sender != this)</span>
         {
-<span class="nc" id="L89">            window.addMessage(sender.getName() + &quot;: &quot; + decryptedMessage);</span>
+<span class="nc" id="L91">            window.addMessage(sender.getName() + &quot;: &quot; + decryptedMessage);</span>
         }
-<span class="nc" id="L91">    }</span>
+<span class="nc" id="L93">    }</span>
 
     /**
      * Create unsigned certificate certificate for the client.
@@ -96,7 +98,7 @@ public class Client
      * @return the certificate
      */
     public Certificate createUnsignedCertificate() {
-<span class="fc" id="L99">        return new Certificate(publicRSAKey, username);</span>
+<span class="fc" id="L101">        return new Certificate(publicRSAKey, username);</span>
     }
 
     /**
@@ -106,12 +108,12 @@ public class Client
      * @throws Exception the exception
      */
     public void obtainAndShareCertificate(CertificateAuthority ca) throws Exception {
-<span class="fc" id="L109">        Certificate unsignedCertificate = createUnsignedCertificate();</span>
-<span class="fc" id="L110">        submitUnsignedCertificate(ca);</span>
-<span class="fc" id="L111">        Certificate signedCertificate = ca.signCertificate(unsignedCertificate);</span>
-<span class="fc" id="L112">        this.certificate = signedCertificate;</span>
-<span class="fc" id="L113">        server.distributeCertificate(signedCertificate);</span>
-<span class="fc" id="L114">    }</span>
+<span class="fc" id="L111">        Certificate unsignedCertificate = createUnsignedCertificate();</span>
+<span class="fc" id="L112">        submitUnsignedCertificate(ca);</span>
+<span class="fc" id="L113">        Certificate signedCertificate = ca.signCertificate(unsignedCertificate);</span>
+<span class="fc" id="L114">        this.certificate = signedCertificate;</span>
+<span class="fc" id="L115">        server.distributeCertificate(signedCertificate);</span>
+<span class="fc" id="L116">    }</span>
 
     /**
      * Validate received certificate from the certificate authority.
@@ -122,23 +124,23 @@ public class Client
      * @throws Exception the exception
      */
     public void validateReceivedCertificate(Certificate certificate, PublicKey caPublicKey, List&lt;String&gt; crl) throws Exception {
-<span class="fc bfc" id="L125" title="All 2 branches covered.">        if (crl.contains(certificate.getUsername())) {</span>
-<span class="fc" id="L126">            throw new CertificateException(&quot;The certificate for the user &quot; + certificate.getUsername() + &quot; has been revoked.&quot;);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (crl.contains(certificate.getUsername())) {</span>
+<span class="fc" id="L128">            throw new CertificateException(&quot;The certificate for the user &quot; + certificate.getUsername() + &quot; has been revoked.&quot;);</span>
         }
 
-<span class="fc" id="L129">        MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);</span>
-<span class="fc" id="L130">        String data = certificate.getPublicKey() + certificate.getUsername();</span>
-<span class="fc" id="L131">        byte[] hashCode = digest.digest(data.getBytes(StandardCharsets.UTF_8));</span>
+<span class="fc" id="L131">        MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);</span>
+<span class="fc" id="L132">        String data = certificate.getPublicKey() + certificate.getUsername();</span>
+<span class="fc" id="L133">        byte[] hashCode = digest.digest(data.getBytes(StandardCharsets.UTF_8));</span>
 
-<span class="fc" id="L133">        Signature publicSignature = Signature.getInstance(&quot;SHA256withRSA&quot;);</span>
-<span class="fc" id="L134">        publicSignature.initVerify(caPublicKey);</span>
-<span class="fc" id="L135">        publicSignature.update(hashCode);</span>
-<span class="fc" id="L136">        byte[] signatureBytes = Base64.getDecoder().decode(certificate.getSignature());</span>
+<span class="fc" id="L135">        Signature publicSignature = Signature.getInstance(&quot;SHA256withRSA&quot;);</span>
+<span class="fc" id="L136">        publicSignature.initVerify(caPublicKey);</span>
+<span class="fc" id="L137">        publicSignature.update(hashCode);</span>
+<span class="fc" id="L138">        byte[] signatureBytes = Base64.getDecoder().decode(certificate.getSignature());</span>
 
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if (!publicSignature.verify(signatureBytes)) {</span>
-<span class="fc" id="L139">            throw new SignatureException(&quot;Failed to validate certificate for user &quot; + certificate.getUsername() + &quot;. Certificate: &quot; + certificate);</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">        if (!publicSignature.verify(signatureBytes)) {</span>
+<span class="fc" id="L141">            throw new SignatureException(&quot;Failed to validate certificate for user &quot; + certificate.getUsername() + &quot;. Certificate: &quot; + certificate);</span>
         }
-<span class="nc" id="L141">    }</span>
+<span class="nc" id="L143">    }</span>
 
     /**
      * Agree on shared secret with another client.
@@ -147,12 +149,12 @@ public class Client
      * @throws Exception the exception
      */
     public void agreeOnSharedSecret(Client otherClient) throws Exception {
-<span class="fc" id="L150">        BigInteger privateKey = DiffieHellman.generatePrivateKey();</span>
+<span class="fc" id="L152">        BigInteger privateKey = DiffieHellman.generatePrivateKey();</span>
 
-<span class="fc" id="L152">        BigInteger publicKey = DiffieHellman.generatePublicKey(privateKey);</span>
+<span class="fc" id="L154">        BigInteger publicKey = DiffieHellman.generatePublicKey(privateKey);</span>
 
-<span class="fc" id="L154">        otherClient.receivePublicKeyForSharedSecret(this.username, publicKey, privateKey);</span>
-<span class="fc" id="L155">    }</span>
+<span class="fc" id="L156">        otherClient.receivePublicKeyForSharedSecret(this.username, publicKey, privateKey);</span>
+<span class="fc" id="L157">    }</span>
 
     /**
      * Receive public key for shared secret from another client.
@@ -163,13 +165,13 @@ public class Client
      * @throws Exception the exception
      */
     public void receivePublicKeyForSharedSecret(String otherUsername, BigInteger otherPublicKey, BigInteger myPrivateKey) throws Exception {
-<span class="fc bfc" id="L166" title="All 2 branches covered.">        if (myPrivateKey == null) {</span>
-<span class="fc" id="L167">            throw new Exception(&quot;Private key is null&quot;);</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">        if (myPrivateKey == null) {</span>
+<span class="fc" id="L169">            throw new Exception(&quot;Private key is null&quot;);</span>
         }
-<span class="fc" id="L169">        BigInteger sharedSecret = DiffieHellman.computeSecret(otherPublicKey, myPrivateKey);</span>
+<span class="fc" id="L171">        BigInteger sharedSecret = DiffieHellman.computeSecret(otherPublicKey, myPrivateKey);</span>
 
-<span class="fc" id="L171">        sharedSecrets.put(otherUsername, sharedSecret);</span>
-<span class="fc" id="L172">    }</span>
+<span class="fc" id="L173">        sharedSecrets.put(otherUsername, sharedSecret);</span>
+<span class="fc" id="L174">    }</span>
 
     /**
      * Submit unsigned certificate to the certificate authority.
@@ -178,20 +180,20 @@ public class Client
      * @throws Exception the exception
      */
     public void submitUnsignedCertificate(CertificateAuthority ca) throws Exception {
-<span class="fc" id="L181">        Certificate unsignedCertificate = createUnsignedCertificate();</span>
+<span class="fc" id="L183">        Certificate unsignedCertificate = createUnsignedCertificate();</span>
 
-<span class="fc" id="L183">        String pemCertificate = convertToPemFormat(unsignedCertificate);</span>
+<span class="fc" id="L185">        String pemCertificate = convertToPemFormat(unsignedCertificate);</span>
         //System.out.println(pemCertificate);
 
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">        if (!pemCertificate.contains(&quot; &quot;)) {</span>
-<span class="nc" id="L187">            throw new IllegalArgumentException(&quot;Invalid certificate data&quot;);</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">        if (!pemCertificate.contains(&quot; &quot;)) {</span>
+<span class="nc" id="L189">            throw new IllegalArgumentException(&quot;Invalid certificate data&quot;);</span>
         }
 
-<span class="fc" id="L190">        Path path = Paths.get(&quot;certificates/&quot; + this.username + &quot;.pem&quot;);</span>
-<span class="fc" id="L191">        Files.write(path, pemCertificate.getBytes());</span>
+<span class="fc" id="L192">        Path path = Paths.get(&quot;certificates/&quot; + this.username + &quot;.pem&quot;);</span>
+<span class="fc" id="L193">        Files.write(path, pemCertificate.getBytes());</span>
 
-<span class="fc" id="L193">        ca.receiveUnsignedCertificate(path);</span>
-<span class="fc" id="L194">    }</span>
+<span class="fc" id="L195">        ca.receiveUnsignedCertificate(path);</span>
+<span class="fc" id="L196">    }</span>
 
     /**
      * Receive certificate from the certificate authority.
@@ -199,9 +201,9 @@ public class Client
      * @param certificate the certificate
      */
     private String convertToPemFormat(Certificate certificate) {
-<span class="fc" id="L202">        String usernameData = Base64.getEncoder().encodeToString(certificate.getUsername().getBytes());</span>
-<span class="fc" id="L203">        String publicKeyData = Base64.getEncoder().encodeToString(certificate.getPublicKey().getEncoded());</span>
-<span class="fc" id="L204">        return &quot;-----BEGIN CERTIFICATE-----\n&quot; + usernameData + &quot; &quot; + publicKeyData + &quot;\n-----END CERTIFICATE-----&quot;;</span>
+<span class="fc" id="L204">        String usernameData = Base64.getEncoder().encodeToString(certificate.getUsername().getBytes());</span>
+<span class="fc" id="L205">        String publicKeyData = Base64.getEncoder().encodeToString(certificate.getPublicKey().getEncoded());</span>
+<span class="fc" id="L206">        return &quot;-----BEGIN CERTIFICATE-----\n&quot; + usernameData + &quot; &quot; + publicKeyData + &quot;\n-----END CERTIFICATE-----&quot;;</span>
     }
 
     /**
@@ -212,15 +214,15 @@ public class Client
     public void receiveCertificate(Certificate certificate)
     {
         try {
-<span class="nc" id="L215">            validateReceivedCertificate(certificate, caPublicKey, crl);</span>
-<span class="fc" id="L216">        } catch (Exception e) {</span>
-<span class="fc" id="L217">            System.out.println(&quot;Failed to validate certificate for user &quot; + certificate.getUsername());</span>
-<span class="nc" id="L218">        }</span>
-<span class="fc" id="L219">    }</span>
+<span class="nc" id="L217">            validateReceivedCertificate(certificate, caPublicKey, crl);</span>
+<span class="fc" id="L218">        } catch (Exception e) {</span>
+<span class="fc" id="L219">            System.out.println(&quot;Failed to validate certificate for user &quot; + certificate.getUsername());</span>
+<span class="nc" id="L220">        }</span>
+<span class="fc" id="L221">    }</span>
 
     @Override
     public String toString() {
-<span class="nc" id="L223">        return getName();</span>
+<span class="nc" id="L225">        return getName();</span>
     }
 
     /**
@@ -230,7 +232,7 @@ public class Client
      */
     public String getName()
     {
-<span class="nc" id="L233">        return name;</span>
+<span class="nc" id="L235">        return name;</span>
     }
 
     /**
@@ -240,7 +242,7 @@ public class Client
      */
     public String getUsername()
     {
-<span class="fc" id="L243">        return username;</span>
+<span class="fc" id="L245">        return username;</span>
     }
 
     /**
@@ -250,7 +252,7 @@ public class Client
      */
     public Certificate getCertificate()
     {
-<span class="fc" id="L253">        return certificate;</span>
+<span class="fc" id="L255">        return certificate;</span>
     }
 
     /**
@@ -260,7 +262,7 @@ public class Client
      */
     public PublicKey getPublicRSAKey()
     {
-<span class="fc" id="L263">        return publicRSAKey;</span>
+<span class="fc" id="L265">        return publicRSAKey;</span>
     }
 
     /**
@@ -270,7 +272,7 @@ public class Client
      */
     public PrivateKey getPrivateRSAKey()
     {
-<span class="fc" id="L273">        return privateRSAKey;</span>
+<span class="fc" id="L275">        return privateRSAKey;</span>
     }
 
     /**
@@ -278,8 +280,8 @@ public class Client
      */
     public void setWindow()
     {
-<span class="nc" id="L281">        this.window = new ClientWindow(this, server);</span>
-<span class="nc" id="L282">    }</span>
+<span class="nc" id="L283">        this.window = new ClientWindow(this, server);</span>
+<span class="nc" id="L284">    }</span>
 
     /**
      * Gets window.
@@ -288,7 +290,7 @@ public class Client
      */
     public ClientWindow getWindow()
     {
-<span class="fc" id="L291">        return window;</span>
+<span class="fc" id="L293">        return window;</span>
     }
 
     /**
@@ -298,9 +300,9 @@ public class Client
      * @param crl         the crl
      */
     public void setCaPublicKeyAndCrl(PublicKey caPublicKey, List&lt;String&gt; crl) {
-<span class="fc" id="L301">        this.caPublicKey = caPublicKey;</span>
-<span class="fc" id="L302">        this.crl = crl;</span>
-<span class="fc" id="L303">    }</span>
+<span class="fc" id="L303">        this.caPublicKey = caPublicKey;</span>
+<span class="fc" id="L304">        this.crl = crl;</span>
+<span class="fc" id="L305">    }</span>
 
     /**
      * Gets shared secret.
@@ -308,16 +310,7 @@ public class Client
      * @return the shared secret
      */
     public Map&lt;String, BigInteger&gt; getSharedSecret() {
-<span class="fc" id="L311">        return sharedSecrets;</span>
-    }
-
-    /**
-     * Gets received messages.
-     *
-     * @return the received messages
-     */
-    public List&lt;Message&gt; getReceivedMessages() {
-<span class="nc" id="L320">        return receivedMessages;</span>
+<span class="fc" id="L313">        return sharedSecrets;</span>
     }
 
     /**
@@ -326,7 +319,7 @@ public class Client
      * @param invalidCertificate the invalid certificate
      */
     public void setCertificate(Certificate invalidCertificate) {
-<span class="nc" id="L329">        this.certificate = invalidCertificate;</span>
-<span class="nc" id="L330">    }</span>
+<span class="nc" id="L322">        this.certificate = invalidCertificate;</span>
+<span class="nc" id="L323">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

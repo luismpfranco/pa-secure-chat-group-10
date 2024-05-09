@@ -7,7 +7,9 @@ import java.security.*;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.*;
 
-//* This class represents a certificate authority that is responsible for signing certificates.
+/**
+ * This class represents a certificate authority that is responsible for signing certificates.
+ */
 public class CertificateAuthority {
     //* The private key of the certificate authority
     private final PrivateKey privateKey;
@@ -21,14 +23,14 @@ public class CertificateAuthority {
      *
      * @throws NoSuchAlgorithmException the no such algorithm exception
      */
-<span class="fc" id="L24">    public CertificateAuthority() throws NoSuchAlgorithmException {</span>
-<span class="fc" id="L25">        KeyPairGenerator keyGen = KeyPairGenerator.getInstance(&quot;RSA&quot;);</span>
-<span class="fc" id="L26">        keyGen.initialize(2048);</span>
-<span class="fc" id="L27">        KeyPair keyPair = keyGen.generateKeyPair();</span>
-<span class="fc" id="L28">        this.privateKey = keyPair.getPrivate();</span>
-<span class="fc" id="L29">        this.publicKey = keyPair.getPublic();</span>
-<span class="fc" id="L30">        this.crl = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L31">    }</span>
+<span class="fc" id="L26">    public CertificateAuthority() throws NoSuchAlgorithmException {</span>
+<span class="fc" id="L27">        KeyPairGenerator keyGen = KeyPairGenerator.getInstance(&quot;RSA&quot;);</span>
+<span class="fc" id="L28">        keyGen.initialize(2048);</span>
+<span class="fc" id="L29">        KeyPair keyPair = keyGen.generateKeyPair();</span>
+<span class="fc" id="L30">        this.privateKey = keyPair.getPrivate();</span>
+<span class="fc" id="L31">        this.publicKey = keyPair.getPublic();</span>
+<span class="fc" id="L32">        this.crl = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L33">    }</span>
 
     /**
      * Sign certificate with the CA's private key.
@@ -38,19 +40,19 @@ public class CertificateAuthority {
      * @throws Exception the exception
      */
     public Certificate signCertificate(Certificate certificate) throws Exception {
-<span class="fc" id="L41">        String data = certificate.getPublicKey() + certificate.getUsername();</span>
-<span class="fc" id="L42">        MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);</span>
-<span class="fc" id="L43">        byte[] hashCode = digest.digest(data.getBytes(StandardCharsets.UTF_8));</span>
+<span class="fc" id="L43">        String data = certificate.getPublicKey() + certificate.getUsername();</span>
+<span class="fc" id="L44">        MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);</span>
+<span class="fc" id="L45">        byte[] hashCode = digest.digest(data.getBytes(StandardCharsets.UTF_8));</span>
 
-<span class="fc" id="L45">        Signature privateSignature = Signature.getInstance(&quot;SHA256withRSA&quot;);</span>
-<span class="fc" id="L46">        privateSignature.initSign(this.privateKey);</span>
-<span class="fc" id="L47">        privateSignature.update(hashCode);</span>
-<span class="fc" id="L48">        byte[] signatureBytes = privateSignature.sign();</span>
+<span class="fc" id="L47">        Signature privateSignature = Signature.getInstance(&quot;SHA256withRSA&quot;);</span>
+<span class="fc" id="L48">        privateSignature.initSign(this.privateKey);</span>
+<span class="fc" id="L49">        privateSignature.update(hashCode);</span>
+<span class="fc" id="L50">        byte[] signatureBytes = privateSignature.sign();</span>
 
-<span class="fc" id="L50">        certificate.setSignature(Base64.getEncoder().encodeToString(signatureBytes));</span>
-<span class="fc" id="L51">        certificate.setValid(true);</span>
+<span class="fc" id="L52">        certificate.setSignature(Base64.getEncoder().encodeToString(signatureBytes));</span>
+<span class="fc" id="L53">        certificate.setValid(true);</span>
 
-<span class="fc" id="L53">        return certificate;</span>
+<span class="fc" id="L55">        return certificate;</span>
     }
 
     /**
@@ -60,14 +62,14 @@ public class CertificateAuthority {
      * @throws Exception the exception
      */
     public void receiveUnsignedCertificate(Path certificatePath) throws Exception {
-<span class="fc" id="L63">        String pemCertificate = Files.readString(certificatePath);</span>
+<span class="fc" id="L65">        String pemCertificate = Files.readString(certificatePath);</span>
 
-<span class="fc" id="L65">        Certificate unsignedCertificate = convertFromPemFormat(pemCertificate);</span>
+<span class="fc" id="L67">        Certificate unsignedCertificate = convertFromPemFormat(pemCertificate);</span>
 
-<span class="fc" id="L67">        Certificate signedCertificate = signCertificate(unsignedCertificate);</span>
+<span class="fc" id="L69">        Certificate signedCertificate = signCertificate(unsignedCertificate);</span>
 
-<span class="fc" id="L69">        Files.write(certificatePath, convertToPemFormat(signedCertificate).getBytes());</span>
-<span class="fc" id="L70">    }</span>
+<span class="fc" id="L71">        Files.write(certificatePath, convertToPemFormat(signedCertificate).getBytes());</span>
+<span class="fc" id="L72">    }</span>
 
     /**
      * Convert to pem format certificate string.
@@ -76,9 +78,9 @@ public class CertificateAuthority {
      * @return the certificate
      */
     private String convertToPemFormat(Certificate certificate) {
-<span class="fc" id="L79">        String usernameData = Base64.getEncoder().encodeToString(certificate.getUsername().getBytes());</span>
-<span class="fc" id="L80">        String publicKeyData = Base64.getEncoder().encodeToString(certificate.getPublicKey().getEncoded());</span>
-<span class="fc" id="L81">        return &quot;-----BEGIN CERTIFICATE-----\n&quot; + usernameData + &quot; &quot; + publicKeyData + &quot;\n-----END CERTIFICATE-----&quot;;</span>
+<span class="fc" id="L81">        String usernameData = Base64.getEncoder().encodeToString(certificate.getUsername().getBytes());</span>
+<span class="fc" id="L82">        String publicKeyData = Base64.getEncoder().encodeToString(certificate.getPublicKey().getEncoded());</span>
+<span class="fc" id="L83">        return &quot;-----BEGIN CERTIFICATE-----\n&quot; + usernameData + &quot; &quot; + publicKeyData + &quot;\n-----END CERTIFICATE-----&quot;;</span>
     }
 
     /**
@@ -89,19 +91,19 @@ public class CertificateAuthority {
      * @throws Exception the exception
      */
     public Certificate convertFromPemFormat(String pemCertificate) throws Exception {
-<span class="fc" id="L92">        String certificateData = pemCertificate.replace(&quot;-----BEGIN CERTIFICATE-----\n&quot;, &quot;&quot;).replace(&quot;\n-----END CERTIFICATE-----&quot;, &quot;&quot;);</span>
-<span class="fc" id="L93">        String[] parts = certificateData.split(&quot; &quot;);</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (parts.length &lt; 2) {</span>
-<span class="fc" id="L95">            throw new IllegalArgumentException(&quot;Invalid certificate data&quot;);</span>
+<span class="fc" id="L94">        String certificateData = pemCertificate.replace(&quot;-----BEGIN CERTIFICATE-----\n&quot;, &quot;&quot;).replace(&quot;\n-----END CERTIFICATE-----&quot;, &quot;&quot;);</span>
+<span class="fc" id="L95">        String[] parts = certificateData.split(&quot; &quot;);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (parts.length &lt; 2) {</span>
+<span class="fc" id="L97">            throw new IllegalArgumentException(&quot;Invalid certificate data&quot;);</span>
         }
-<span class="fc" id="L97">        String username = new String(Base64.getDecoder().decode(parts[0]), StandardCharsets.UTF_8);</span>
-<span class="fc" id="L98">        byte[] publicKeyData = Base64.getDecoder().decode(parts[1]);</span>
+<span class="fc" id="L99">        String username = new String(Base64.getDecoder().decode(parts[0]), StandardCharsets.UTF_8);</span>
+<span class="fc" id="L100">        byte[] publicKeyData = Base64.getDecoder().decode(parts[1]);</span>
 
-<span class="fc" id="L100">        X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKeyData);</span>
-<span class="fc" id="L101">        KeyFactory keyFactory = KeyFactory.getInstance(&quot;RSA&quot;);</span>
-<span class="fc" id="L102">        PublicKey publicKey = keyFactory.generatePublic(spec);</span>
+<span class="fc" id="L102">        X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKeyData);</span>
+<span class="fc" id="L103">        KeyFactory keyFactory = KeyFactory.getInstance(&quot;RSA&quot;);</span>
+<span class="fc" id="L104">        PublicKey publicKey = keyFactory.generatePublic(spec);</span>
 
-<span class="fc" id="L104">        return new Certificate(publicKey, username);</span>
+<span class="fc" id="L106">        return new Certificate(publicKey, username);</span>
     }
 
 
@@ -111,7 +113,7 @@ public class CertificateAuthority {
      * @return the public key
      */
     public PublicKey getPublicKey() {
-<span class="fc" id="L114">        return publicKey;</span>
+<span class="fc" id="L116">        return publicKey;</span>
     }
 
     /**
@@ -120,7 +122,7 @@ public class CertificateAuthority {
      * @return the crl
      */
     public List&lt;String&gt; getCrl() {
-<span class="fc" id="L123">        return crl;</span>
+<span class="fc" id="L125">        return crl;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
