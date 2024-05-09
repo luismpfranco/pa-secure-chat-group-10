@@ -32,13 +32,13 @@ jobs:
         with:
           name: build-artifact
           path: target/
-      - name: Upload the documentation artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: documentation-artifact
-          path: target/apidocs/
       - name: Upload the test coverage artifact
         uses: actions/upload-artifact@v2
         with:
           name: test-coverage-artifact
           path: target/site/jacoco/
+      - name: Upload the documentation artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: documentation-artifact
+          path: target/apidocs/
