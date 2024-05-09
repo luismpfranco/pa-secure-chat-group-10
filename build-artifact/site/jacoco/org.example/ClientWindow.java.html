@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClientWindow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pa-secure-chat-group-10</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">ClientWindow.java</span></div><h1>ClientWindow.java</h1><pre class="source lang-java linenums">package org.example;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+/**
+ * This class represents the client window that is displayed when a client connects to the server.
+ */
+public class ClientWindow extends JFrame {
+    private final Client client;
+    private final JTextArea messagesArea;
+    private final JTextField inputField;
+    private final JList&lt;Client&gt; clientList;
+<span class="nc" id="L18">    private static int windowCount = 0;</span>
+    private static final int WINDOW_DISTANCE = 360;
+
+    /**
+     * Instantiates a new Client window.
+     *
+     * @param client the client
+     * @param server the server
+     */
+<span class="nc" id="L27">    public ClientWindow(Client client, Server server) {</span>
+<span class="nc" id="L28">        this.client = client;</span>
+
+<span class="nc" id="L30">        setTitle(client.getUsername());</span>
+<span class="nc" id="L31">        setSize(350, 350);</span>
+<span class="nc" id="L32">        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+
+<span class="nc" id="L34">        setLocation(windowCount * WINDOW_DISTANCE, WINDOW_DISTANCE);</span>
+<span class="nc" id="L35">        windowCount++;</span>
+
+<span class="nc" id="L37">        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));</span>
+<span class="nc" id="L38">        JLabel toLabel = new JLabel(&quot;Para:&quot;);</span>
+<span class="nc" id="L39">        topPanel.add(toLabel);</span>
+
+
+
+<span class="nc" id="L43">        clientList = new JList&lt;&gt;(server.getClients().toArray(new Client[0]));</span>
+<span class="nc" id="L44">        clientList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);</span>
+
+<span class="nc" id="L46">        JScrollPane scrollPane = new JScrollPane(clientList);</span>
+<span class="nc" id="L47">        scrollPane.setPreferredSize(new Dimension(205, 70));</span>
+<span class="nc" id="L48">        topPanel.add(scrollPane);</span>
+
+<span class="nc" id="L50">        add(topPanel, BorderLayout.NORTH);</span>
+
+<span class="nc" id="L52">        messagesArea = new JTextArea();</span>
+<span class="nc" id="L53">        messagesArea.setEditable(false);</span>
+<span class="nc" id="L54">        add(new JScrollPane(messagesArea), BorderLayout.CENTER);</span>
+
+<span class="nc" id="L56">        inputField = new JTextField();</span>
+<span class="nc" id="L57">        add(inputField, BorderLayout.SOUTH);</span>
+<span class="nc" id="L58">        inputField.addActionListener(new ActionListener() {</span>
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+<span class="nc" id="L62">                    List&lt;Client&gt; selectedClients = clientList.getSelectedValuesList();</span>
+<span class="nc" id="L63">                    Client[] selectedClientsArray = selectedClients.toArray(new Client[0]);</span>
+<span class="nc" id="L64">                    client.sendMessage(inputField.getText(), selectedClientsArray);</span>
+<span class="nc" id="L65">                    inputField.setText(&quot;&quot;);</span>
+<span class="nc" id="L66">                } catch (Exception ex) {</span>
+<span class="nc" id="L67">                    ex.printStackTrace();</span>
+<span class="nc" id="L68">                }</span>
+<span class="nc" id="L69">            }</span>
+        });
+
+<span class="nc" id="L72">        JButton broadcastButton = new JButton(&quot;Broadcast&quot;);</span>
+<span class="nc" id="L73">        add(broadcastButton, BorderLayout.EAST);</span>
+<span class="nc" id="L74">        broadcastButton.addActionListener(e -&gt; {</span>
+            try {
+<span class="nc" id="L76">                Client[] allClients = server.getClients().toArray(new Client[0]);</span>
+<span class="nc" id="L77">                client.sendMessage(inputField.getText(), allClients);</span>
+<span class="nc" id="L78">                inputField.setText(&quot;&quot;);</span>
+<span class="nc" id="L79">            } catch (Exception ex) {</span>
+<span class="nc" id="L80">                ex.printStackTrace();</span>
+<span class="nc" id="L81">            }</span>
+<span class="nc" id="L82">        });</span>
+
+<span class="nc" id="L84">        setVisible(true);</span>
+<span class="nc" id="L85">    }</span>
+
+    /**
+     * Add message to the client window.
+     *
+     * @param message the message
+     */
+    public void addMessage(String message) {
+<span class="nc" id="L93">        messagesArea.append(message + &quot;\n&quot;);</span>
+<span class="nc" id="L94">    }</span>
+
+    /**
+     * Update the client list.
+     *
+     * @param clients the clients
+     */
+    public void updateClient(Client[] clients) {
+<span class="nc" id="L102">        ArrayList&lt;Client&gt; otherClients = new ArrayList&lt;&gt;(Arrays.asList(clients));</span>
+<span class="nc" id="L103">        otherClients.remove(client);</span>
+<span class="nc" id="L104">        DefaultListModel&lt;Client&gt; model = new DefaultListModel&lt;&gt;();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        for (Client c : otherClients) {</span>
+<span class="nc" id="L106">            model.addElement(c);</span>
+<span class="nc" id="L107">        }</span>
+<span class="nc" id="L108">        clientList.setModel(model);</span>
+<span class="nc" id="L109">    }</span>
+
+    /**
+     * Gets messages area.
+     *
+     * @return the messages area
+     */
+    public JTextArea getMessagesArea() {
+<span class="nc" id="L117">        return messagesArea;</span>
+    }
+
+    /**
+     * Gets client list.
+     *
+     * @return the client list
+     */
+    public JList&lt;Client&gt; getClientList() {
+<span class="nc" id="L126">        return clientList;</span>
+    }
+
+    /**
+     * Gets input field.
+     *
+     * @return the input field
+     */
+    public JTextField getInputField() {
+<span class="nc" id="L135">        return inputField;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

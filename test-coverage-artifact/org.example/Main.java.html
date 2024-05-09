@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pa-secure-chat-group-10</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">package org.example;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="nc" id="L7">public class Main {</span>
+    public static void main(String[] args) throws Exception {
+<span class="nc" id="L9">        Server server = new Server();</span>
+<span class="nc" id="L10">        CertificateAuthority ca = new CertificateAuthority();</span>
+
+<span class="nc" id="L12">        List&lt;Client&gt; clients = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L13">        clients.add(new Client(&quot;Catarina&quot;, &quot;MC_fanatic&quot;, server));</span>
+<span class="nc" id="L14">        clients.add(new Client(&quot;Luís&quot;, &quot;luf&quot;, server));</span>
+<span class="nc" id="L15">        clients.add(new Client(&quot;Rosa&quot;, &quot;quinhaz&quot;, server));</span>
+<span class="nc" id="L16">        clients.add(new Client(&quot;Josefa&quot;, &quot;josefa4609&quot;, server));</span>
+
+<span class="nc bnc" id="L18" title="All 2 branches missed.">        for ( Client c : clients ) {</span>
+<span class="nc" id="L19">            c.setCaPublicKeyAndCrl(ca.getPublicKey(), ca.getCrl());</span>
+<span class="nc" id="L20">            c.obtainAndShareCertificate(ca);</span>
+
+<span class="nc bnc" id="L22" title="All 2 branches missed.">            if(c.getCertificate() == null) {</span>
+<span class="nc" id="L23">                System.out.println(&quot;[&quot;+ LocalDateTime.now() + &quot;] The user &quot; + c.getUsername() + &quot; don't have a certificate.&quot;);</span>
+            }
+<span class="nc bnc" id="L25" title="All 2 branches missed.">            else if (c.getCertificate().isValid()) {</span>
+<span class="nc" id="L26">                System.out.println(&quot;[&quot;+ LocalDateTime.now() + &quot;] &quot; + c.getUsername() + &quot; has connected to Chat.&quot;);</span>
+<span class="nc" id="L27">                c.setWindow();</span>
+<span class="nc" id="L28">                server.addUser(c);</span>
+            } else {
+<span class="nc" id="L30">                System.out.println(&quot;[&quot;+ LocalDateTime.now() + &quot;] &quot; + &quot; Failed to validate certificate for user &quot; + c.getUsername());</span>
+            }
+<span class="nc" id="L32">        }</span>
+<span class="nc" id="L33">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

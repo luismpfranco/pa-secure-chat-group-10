@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiffieHellman.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pa-secure-chat-group-10</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">DiffieHellman.java</span></div><h1>DiffieHellman.java</h1><pre class="source lang-java linenums">package org.example;
+
+import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Random;
+
+/**
+ * This class represents a Diffie-Hellman key exchange object that is used to generate a secret key between the client and the server.
+ */
+<span class="nc" id="L11">public class DiffieHellman {</span>
+
+    private static final int NUM_BITS = 128;
+<span class="fc" id="L14">    private static final BigInteger N = new BigInteger ( &quot;1289971646&quot; );</span>
+<span class="fc" id="L15">    private static final BigInteger G = new BigInteger ( &quot;3&quot; );</span>
+
+    /**
+     * Generates a private key to be used in the Diffie-Hellman key exchange.
+     *
+     * @return the private key
+     *
+     * @throws NoSuchAlgorithmException when the algorithm used to generate the key is not available
+     */
+    public static BigInteger generatePrivateKey ( ) throws NoSuchAlgorithmException {
+<span class="fc" id="L25">        Random randomGenerator = SecureRandom.getInstance ( &quot;SHA1PRNG&quot; );</span>
+<span class="fc" id="L26">        return new BigInteger ( NUM_BITS , randomGenerator );</span>
+    }
+
+    /**
+     * Generates a public key to be used in the Diffie-Hellman key exchange.
+     *
+     * @param privateKey the private key
+     *
+     * @return the public key
+     */
+    public static BigInteger generatePublicKey ( BigInteger privateKey ) {
+<span class="fc" id="L37">        return G.modPow ( privateKey , N );</span>
+    }
+
+    /**
+     * Generates a secret key to be used in the Diffie-Hellman key exchange.
+     *
+     * @param publicKey  the public key
+     * @param privateKey the private key
+     *
+     * @return the secret key
+     */
+    public static BigInteger computeSecret ( BigInteger publicKey , BigInteger privateKey ) {
+<span class="fc" id="L49">        return publicKey.modPow ( privateKey , N );</span>
+    }
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

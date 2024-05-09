@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="ServerTest" time="1.172" tests="4" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="17"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="D:\a\pa-secure-chat-group-10\pa-secure-chat-group-10\target\test-classes;D:\a\pa-secure-chat-group-10\pa-secure-chat-group-10\target\classes;C:\Users\runneradmin\.m2\repository\org\apache\httpcomponents\httpcore\4.4.14\httpcore-4.4.14.jar;C:\Users\runneradmin\.m2\repository\org\junit\jupiter\junit-jupiter\5.11.0-M1\junit-jupiter-5.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.11.0-M1\junit-jupiter-api-5.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\runneradmin\.m2\repository\org\junit\platform\junit-platform-commons\1.11.0-M1\junit-platform-commons-1.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\runneradmin\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.11.0-M1\junit-jupiter-params-5.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.11.0-M1\junit-jupiter-engine-5.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\junit\platform\junit-platform-engine\1.11.0-M1\junit-platform-engine-1.11.0-M1.jar;"/>
+    <property name="java.vm.vendor" value="Microsoft"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://www.microsoft.com"/>
+    <property name="user.timezone" value="Etc/UTC"/>
+    <property name="os.name" value="Windows Server 2022"/>
+    <property name="java.vm.specification.version" value="17"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.boot.library.path" value="C:\hostedtoolcache\windows\Java_Microsoft_jdk\17.0.10\x64\bin"/>
+    <property name="sun.java.command" value="C:\Users\runneradmin\AppData\Local\Temp\surefire10077440258387920461\surefirebooter8265428944891547096.jar C:\Users\runneradmin\AppData\Local\Temp\surefire10077440258387920461 2024-05-09T20-44-46_894-jvmRun1 surefire8835359054357967112tmp surefire_04671550658083877490tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="D:\a\pa-secure-chat-group-10\pa-secure-chat-group-10\target\test-classes;D:\a\pa-secure-chat-group-10\pa-secure-chat-group-10\target\classes;C:\Users\runneradmin\.m2\repository\org\apache\httpcomponents\httpcore\4.4.14\httpcore-4.4.14.jar;C:\Users\runneradmin\.m2\repository\org\junit\jupiter\junit-jupiter\5.11.0-M1\junit-jupiter-5.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.11.0-M1\junit-jupiter-api-5.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\runneradmin\.m2\repository\org\junit\platform\junit-platform-commons\1.11.0-M1\junit-platform-commons-1.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\runneradmin\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.11.0-M1\junit-jupiter-params-5.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.11.0-M1\junit-jupiter-engine-5.11.0-M1.jar;C:\Users\runneradmin\.m2\repository\org\junit\platform\junit-platform-engine\1.11.0-M1\junit-platform-engine-1.11.0-M1.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\runneradmin"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2024-01-16"/>
+    <property name="java.home" value="C:\hostedtoolcache\windows\Java_Microsoft_jdk\17.0.10\x64"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="D:\a\pa-secure-chat-group-10\pa-secure-chat-group-10"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\runneradmin\AppData\Local\Temp\surefire10077440258387920461\surefirebooter8265428944891547096.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="17.0.10+7-LTS"/>
+    <property name="user.name" value="runneradmin"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Microsoft-8902769"/>
+    <property name="localRepository" value="C:\Users\runneradmin\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/microsoft/openjdk/issues"/>
+    <property name="java.io.tmpdir" value="C:\Users\RUNNER~1\AppData\Local\Temp\"/>
+    <property name="java.version" value="17.0.10"/>
+    <property name="user.dir" value="D:\a\pa-secure-chat-group-10\pa-secure-chat-group-10"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\hostedtoolcache\windows\Java_Microsoft_jdk\17.0.10\x64\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\PowerShell\7;C:\hostedtoolcache\windows\Java_Microsoft_jdk\17.0.10\x64\bin;C:\Program Files\MongoDB\Server\5.0\bin;C:\aliyun-cli;C:\vcpkg;C:\Program Files (x86)\NSIS\;C:\tools\zstd;C:\Program Files\Mercurial\;C:\hostedtoolcache\windows\stack\2.15.5\x64;C:\cabal\bin;C:\\ghcup\bin;C:\mingw64\bin;C:\Program Files\dotnet;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\R\R-4.3.3\bin\x64;C:\SeleniumWebDrivers\GeckoDriver;C:\SeleniumWebDrivers\EdgeDriver\;C:\SeleniumWebDrivers\ChromeDriver;C:\Program Files (x86)\sbt\bin;C:\Program Files (x86)\GitHub CLI;C:\Program Files\Git\bin;C:\Program Files (x86)\pipx_bin;C:\npm\prefix;C:\hostedtoolcache\windows\go\1.21.9\x64\bin;C:\hostedtoolcache\windows\Python\3.9.13\x64\Scripts;C:\hostedtoolcache\windows\Python\3.9.13\x64;C:\hostedtoolcache\windows\Ruby\3.0.6\x64\bin;C:\Program Files\OpenSSL\bin;C:\tools\kotlinc\bin;C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\8.0.412-8\x64\bin;C:\Program Files\ImageMagick-7.1.1-Q16-HDRI;C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin;C:\ProgramData\kind;C:\ProgramData\docker-compose;C:\ProgramData\Chocolatey\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\PowerShell\7\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\WiX Toolset v3.14\bin;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files\CMake\bin;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.8.7\bin;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\GitHub CLI\;c:\tools\php;C:\Program Files (x86)\sbt\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\Amazon\SessionManagerPlugin\bin\;C:\Program Files\Amazon\AWSSAMCLI\bin\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\LLVM\bin;C:\Users\runneradmin\.dotnet\tools;C:\Users\runneradmin\.cargo\bin;C:\Users\runneradmin\AppData\Local\Microsoft\WindowsApps;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="Microsoft"/>
+    <property name="java.vm.version" value="17.0.10+7-LTS"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="61.0"/>
+  </properties>
+  <testcase name="testForwardMessage" classname="ServerTest" time="0.39"/>
+  <testcase name="testAddUser" classname="ServerTest" time="0.172"/>
+  <testcase name="testStartCommunication" classname="ServerTest" time="0.156">
+    <system-out><![CDATA[The shared secrets are different
+]]></system-out>
+  </testcase>
+  <testcase name="testDistributeCertificate" classname="ServerTest" time="0.422">
+    <system-out><![CDATA[Expected certificate: Certificate{username='user1', publicKey=Sun RSA public key, 2048 bits
+  params: null
+  modulus: 26827758669055307103175135124969246036947685041460126021640904153429429434739160532431820997018452223201708155969006762605345722679680453592715531305454597513572049456897586680322142049854113973281731365534731130509568651222859537345625062056196057715195196195257069247271610388663628243969079714283945163140100967059903406509463539066437728411440173330992988186451481298478074842182056566710547275697088912907189371486776165253175920979779984000978932019598058600718892405739419272635600785307006329414483412039626217205123534558223513964551104908598267147031783604155195010258584693309684545672539859797158130337407
+  public exponent: 65537, valid=false, signature='null'}
+Expected certificate: Certificate{username='user2', publicKey=Sun RSA public key, 2048 bits
+  params: null
+  modulus: 18473191784965051230359565087628351829783364956031196554522106030508872484673198762041787927694948765537185334839058794753101040630629197426957822160691146188913288127509761694929384064467836169044915134199433338652222025215358672508398951143529047272724278705120534991768469847904046477292659535892203164873214419829048457682727766942708397628276223514810460460638885278282856794541288255181851719500061641089199966653021604661792835430744579724328523686402107500477020924900070332285533560972176007189211975218696521650251665456264310218590186945933027227115934349117776322506784544704323271832485440989290823025713
+  public exponent: 65537, valid=false, signature='null'}
+Expected certificate: Certificate{username='user3', publicKey=Sun RSA public key, 2048 bits
+  params: null
+  modulus: 29576992814942321692521689136479708081054944387164977453233310844425869895111355611558396740741624347150791344502064852091256930143490451414917899954764041882912396286514957177137234566047977280947940632900109465933207363423112584149908617801985856828521187792125429524064779153268372993827450673396820737929834982545744319648318339196020521043677948949163528452344751692155967975439561279022194432219596236086537414895790600133166593155635713779131602929638581807187011095862871485766412604975012812155335365184560084806417255225462172590914668206601222912803446693601143683674524007406395493961552044147460536772263
+  public exponent: 65537, valid=false, signature='null'}
+Received certificate: Certificate{username='user1', publicKey=Sun RSA public key, 2048 bits
+  params: null
+  modulus: 26827758669055307103175135124969246036947685041460126021640904153429429434739160532431820997018452223201708155969006762605345722679680453592715531305454597513572049456897586680322142049854113973281731365534731130509568651222859537345625062056196057715195196195257069247271610388663628243969079714283945163140100967059903406509463539066437728411440173330992988186451481298478074842182056566710547275697088912907189371486776165253175920979779984000978932019598058600718892405739419272635600785307006329414483412039626217205123534558223513964551104908598267147031783604155195010258584693309684545672539859797158130337407
+  public exponent: 65537, valid=true, signature='KrOQxyubcnbP5/HkKmRavNnXAN6eik75+76L/9/gBv9kKL8dHtIXHYq/svQjjxzh/UTMaZp1TfiqaKF6oEdNi6WXIfoNxwW8zWQf7eqw7XINhWGQ8aroBeNWON9xCPFiF3kd37U8bgU2GPNyhqcAd7KM11iyfPsSD4wfa7DTZeBULe1lbL3OmQuoQf0AoynvGlMvOW/Ei/4+sCtV0KzBYWSpWzj5YRuicU4Lb72ufe6By40iVfg24u/3tMs/tkRB6N4sjB8wE4biXSkxbruXLlBV8F7zevG2pdo478sQS6mIb3U+8/5Xufz8SLXDP8z8KsOSSKTL+nSmUcuKqVCWtg=='}
+Received certificate: Certificate{username='user2', publicKey=Sun RSA public key, 2048 bits
+  params: null
+  modulus: 18473191784965051230359565087628351829783364956031196554522106030508872484673198762041787927694948765537185334839058794753101040630629197426957822160691146188913288127509761694929384064467836169044915134199433338652222025215358672508398951143529047272724278705120534991768469847904046477292659535892203164873214419829048457682727766942708397628276223514810460460638885278282856794541288255181851719500061641089199966653021604661792835430744579724328523686402107500477020924900070332285533560972176007189211975218696521650251665456264310218590186945933027227115934349117776322506784544704323271832485440989290823025713
+  public exponent: 65537, valid=true, signature='GoZv4MGOY5uoe6lMeeu5Mg6hA82UxgPSt7vuZ6gGJcVh2YAJ4T5D0ltlbZQdnY/EIOCwdLFNPeTQSwrV37JD4iCAdMftOm4lUMP7aUPN8C4wxZKDiCj2ZDcGe/9LAYJL5DYmBKJb3+3ogpROqa8A5AL0VbOIuBuRbJQslXi9dJSWRODcK22m7FEKlVb2tuO9X6bSQgoeeJO2qtbAhOHTCB6gtBHlsQ8rh+z1w3hpFVOSXorGwE36MtZqolHEchVGdKFTP/wMj1QJuH4z+6bMqXmwTO4t4d3lrxoEKr/i6QM1MXXOHTPCmfuoJcdRutJ1aVTK6csLxTfkuJ9y2PH2sg=='}
+Received certificate: Certificate{username='user3', publicKey=Sun RSA public key, 2048 bits
+  params: null
+  modulus: 29576992814942321692521689136479708081054944387164977453233310844425869895111355611558396740741624347150791344502064852091256930143490451414917899954764041882912396286514957177137234566047977280947940632900109465933207363423112584149908617801985856828521187792125429524064779153268372993827450673396820737929834982545744319648318339196020521043677948949163528452344751692155967975439561279022194432219596236086537414895790600133166593155635713779131602929638581807187011095862871485766412604975012812155335365184560084806417255225462172590914668206601222912803446693601143683674524007406395493961552044147460536772263
+  public exponent: 65537, valid=true, signature='hRQgfPPnGwAV55B4JpHieIEZDw+OAtjApykxGwBwb9m/+pe3xrcdG3zXPQ43tuNzmSyy/fT6gW88pOdiWsF76wHrGSjqefavu8kMr6/xVB1V39t4tF+O8K7ew0C9d8pH8PJju69kJfO7JfALdqvWo3CvjgoSn0POdPty4MtFEzdyDUs8zloMBivZtfpVTiNt3Rm1qTEhimtKVB81tpR7XaMmL/Y0dyi9eFDnvSqivdv4pZAqCApAtW8DRehnWDt1GBlWuwi8ovlSsDpmmR85/YbjOjtrfVAmkTkZS0T/v1JKGZjGUA/Of2yAau/C8Fp879x/94ye/DXv6pBJmBtKLA=='}
+Certificate1 is not valid
+Certificate2 is not valid
+Certificate3 is not valid
+]]></system-out>
+  </testcase>
+</testsuite>

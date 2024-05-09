@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+pa-secure-chat-group-10,org.example,Main,104,0,6,0,20,0,5,0,2,0
+pa-secure-chat-group-10,org.example,DiffieHellman,3,30,0,0,1,6,1,4,1,4
+pa-secure-chat-group-10,org.example,Client,142,218,12,6,33,59,14,18,7,16
+pa-secure-chat-group-10,org.example,Encryption,3,50,0,0,1,13,1,5,1,5
+pa-secure-chat-group-10,org.example,Message,0,15,0,0,0,6,0,3,0,3
+pa-secure-chat-group-10,org.example,Certificate,0,45,0,0,0,15,0,8,0,8
+pa-secure-chat-group-10,org.example,ClientWindow,207,0,2,0,48,0,9,0,8,0
+pa-secure-chat-group-10,org.example,Server,18,61,1,7,4,17,2,8,1,5
+pa-secure-chat-group-10,org.example,CertificateAuthority,0,161,0,2,0,38,0,8,0,7
+pa-secure-chat-group-10,org.example,ClientWindow.new ActionListener() {...},38,0,0,0,9,0,2,0,2,0

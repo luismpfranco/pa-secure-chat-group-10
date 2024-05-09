@@ -1,0 +1,7 @@
+CertificateTest.class
+ClientTest.class
+CertificateAuthorityTest.class
+MessageTest.class
+DiffieHellmanTest.class
+ServerTest.class
+EncryptionTest.class

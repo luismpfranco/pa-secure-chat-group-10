@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Server.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pa-secure-chat-group-10</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">Server.java</span></div><h1>Server.java</h1><pre class="source lang-java linenums">package org.example;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * This class represents a server object that is used to manage the clients and the communication between them.
+ */
+public class Server {
+    private final List&lt;Client&gt; clients;
+
+    /**
+     * Instantiates a new Server.
+     */
+<span class="fc" id="L14">    public Server() {</span>
+<span class="fc" id="L15">        this.clients = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L16">    }</span>
+
+    /**
+     * Adds a user to the server.
+     *
+     * @param client the client
+     */
+
+    public void addUser(Client client) {
+<span class="fc" id="L25">        clients.add(client);</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        for(Client c : clients){</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">            if(c.getWindow() != null) {</span>
+<span class="nc" id="L28">                c.getWindow().updateClient(clients.toArray(new Client[0]));</span>
+            }
+<span class="fc" id="L30">        }</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * Forwards a message from a client to another
+     *
+     * @param message        the message
+     * @param clientSender   the client sender
+     * @param clientReceiver the client receiver
+     * @throws Exception the exception
+     */
+    public void forwardMessage(Message message, Client clientSender, Client clientReceiver) throws Exception {
+<span class="nc" id="L42">        startCommunication(clientSender, clientReceiver);</span>
+<span class="nc" id="L43">        clientReceiver.receiveMessage(message, clientSender);</span>
+<span class="nc" id="L44">    }</span>
+
+    /**
+     * Distributes a certificate to all clients.
+     *
+     * @param certificate the certificate
+     */
+    public void distributeCertificate(Certificate certificate) {
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        for (Client c : clients) {</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">            if (!c.getUsername().equals(certificate.getUsername())) {</span>
+<span class="fc" id="L54">                c.receiveCertificate(certificate);</span>
+            }
+<span class="fc" id="L56">        }</span>
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * Starts the communication between two clients.
+     *
+     * @param client1 the client 1
+     * @param client2 the client 2
+     * @throws Exception the exception
+     */
+    public void startCommunication(Client client1, Client client2) throws Exception {
+<span class="fc" id="L67">        client1.agreeOnSharedSecret(client2);</span>
+<span class="fc" id="L68">        client2.agreeOnSharedSecret(client1);</span>
+<span class="fc" id="L69">    }</span>
+
+    /**
+     * Gets clients.
+     *
+     * @return the clients
+     */
+    public List&lt;Client&gt; getClients() {
+<span class="fc" id="L77">        return clients;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
