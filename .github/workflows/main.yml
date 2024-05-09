@@ -19,6 +19,10 @@ jobs:
         with:
           distribution: 'microsoft'
           java-version: '17'
+      - name: Setup Xvfb
+        uses: GabrielBB/xvfb-action@v1.4
+        with:
+          run: start
       - name: Build with Maven on ${{ matrix.os }}
         run: mvn package
         env:
