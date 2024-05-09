@@ -133,9 +133,7 @@ public class ClientTest {
         BigInteger otherPublicKey = BigInteger.valueOf(12345);
         BigInteger myPrivateKey = null;
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            client1.receivePublicKeyForSharedSecret("otherUsername", otherPublicKey, myPrivateKey);
-        });
+        Exception exception = assertThrows(Exception.class, () -> client1.receivePublicKeyForSharedSecret("otherUsername", otherPublicKey, myPrivateKey));
 
         String expectedMessage = "Private key is null";
         String actualMessage = exception.getMessage();
@@ -155,9 +153,7 @@ public class ClientTest {
         List<String> crl = new ArrayList<>();
         crl.add(client1.getUsername());
 
-        Exception exception = assertThrows(CertificateException.class, () -> {
-            client1.validateReceivedCertificate(validCertificate, client1.getPublicRSAKey(), crl);
-        });
+        Exception exception = assertThrows(CertificateException.class, () -> client1.validateReceivedCertificate(validCertificate, client1.getPublicRSAKey(), crl));
 
         String expectedMessage = "The certificate for the user " + client1.getUsername() + " has been revoked.";
         String actualMessage = exception.getMessage();
@@ -180,8 +176,6 @@ public class ClientTest {
 
         List<String> crl = new ArrayList<>();
 
-        assertThrows(SignatureException.class, () -> {
-            client1.validateReceivedCertificate(invalidCertificate, client1.getPublicRSAKey(), crl);
-        });
+        assertThrows(SignatureException.class, () -> client1.validateReceivedCertificate(invalidCertificate, client1.getPublicRSAKey(), crl));
     }
 }
