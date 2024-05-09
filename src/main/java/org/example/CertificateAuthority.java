@@ -7,7 +7,9 @@ import java.security.*;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.*;
 
-//* This class represents a certificate authority that is responsible for signing certificates.
+/**
+ * This class represents a certificate authority that is responsible for signing certificates.
+ */
 public class CertificateAuthority {
     //* The private key of the certificate authority
     private final PrivateKey privateKey;

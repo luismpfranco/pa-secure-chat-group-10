@@ -9,7 +9,9 @@ import java.security.*;
 import java.security.cert.CertificateException;
 import java.util.*;
 
-//* This class represents a client that can send and receive messages.
+/**
+ * This class represents a client object that is used to send and receive messages between clients.
+ */
 public class Client
 {
     private final String name;
@@ -309,15 +311,6 @@ public class Client
      */
     public Map<String, BigInteger> getSharedSecret() {
         return sharedSecrets;
-    }
-
-    /**
-     * Gets received messages.
-     *
-     * @return the received messages
-     */
-    public List<Message> getReceivedMessages() {
-        return receivedMessages;
     }
 
     /**

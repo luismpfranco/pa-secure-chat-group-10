@@ -107,31 +107,4 @@ public class ClientWindow extends JFrame {
         }
         clientList.setModel(model);
     }
-
-    /**
-     * Gets messages area.
-     *
-     * @return the messages area
-     */
-    public JTextArea getMessagesArea() {
-        return messagesArea;
-    }
-
-    /**
-     * Gets client list.
-     *
-     * @return the client list
-     */
-    public JList<Client> getClientList() {
-        return clientList;
-    }
-
-    /**
-     * Gets input field.
-     *
-     * @return the input field
-     */
-    public JTextField getInputField() {
-        return inputField;
-    }
 }

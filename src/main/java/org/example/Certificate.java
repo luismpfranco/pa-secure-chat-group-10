@@ -2,7 +2,9 @@ package org.example;
 
 import java.security.PublicKey;
 
-//* This class represents a certificate object that is used to authenticate clients.
+/**
+ * This class represents a certificate object that is used to authenticate the client.
+ */
 public class Certificate {
     //* The public key of the client.
     private final PublicKey publicKey;
